@@ -1,4 +1,4 @@
-import type { SchematicAst } from "@schematic-engine/core"
+import type { PinSide, SchematicAst } from "@schematic-engine/core"
 import {
   type BlockType,
   solveSchematic,
@@ -22,8 +22,10 @@ const PIN_FONT_SIZE = 2.5
 const LABEL_FONT_SIZE = 3
 const PIN_DOT_R = 1.5
 const NUM_INSET = 3
-/** Distance the net label sits outside the pin, in pixels. */
-const LABEL_OUT = 5
+/** Distance the net label centre sits outside the pin, in pixels. */
+const LABEL_OUT = 6
+/** Side length of the square net-label box, in pixels. */
+const LABEL_BOX = 6
 
 function fmt(n: number): string {
   return String(Number(n.toFixed(3)))
@@ -107,16 +109,50 @@ export function renderRoutedSvg(routed: RoutedSchematic): string {
     ].join("\n")
   })
 
-  // Net labels: the number drawn just outside the pin along its side.
-  const netLabels = labels.map((l) => {
-    let lx = X(l.x)
-    let ly = Y(l.y)
-    if (l.side === "left") lx -= LABEL_OUT
-    else if (l.side === "right") lx += LABEL_OUT
-    else if (l.side === "top") ly -= LABEL_OUT
+  // A bordered box (just outside a pin, along its side) holding label text, so
+  // it reads clearly as a label. Used for net names and broken-trace numbers.
+  const boxedLabel = (
+    px: number,
+    py: number,
+    side: PinSide,
+    text: string,
+  ): string[] => {
+    let lx = px
+    let ly = py
+    if (side === "left") lx -= LABEL_OUT
+    else if (side === "right") lx += LABEL_OUT
+    else if (side === "top") ly -= LABEL_OUT
     else ly += LABEL_OUT
-    return `  <text x="${fmt(lx)}" y="${fmt(ly)}" font-family="sans-serif" font-size="${LABEL_FONT_SIZE}" font-weight="bold" text-anchor="middle" dominant-baseline="middle">${l.label}</text>`
-  })
+    const bw = Math.max(LABEL_BOX, text.length * LABEL_FONT_SIZE * 0.7 + 2)
+    return [
+      `  <rect x="${fmt(lx - bw / 2)}" y="${fmt(ly - LABEL_BOX / 2)}" width="${fmt(bw)}" height="${fmt(LABEL_BOX)}" rx="1" fill="white" stroke="black" stroke-width="0.5" />`,
+      `  <text x="${fmt(lx)}" y="${fmt(ly)}" font-family="sans-serif" font-size="${LABEL_FONT_SIZE}" font-weight="bold" text-anchor="middle" dominant-baseline="middle">${text}</text>`,
+    ]
+  }
+
+  // Pins that already have a direct connection (a routed trace endpoint or a
+  // broken-trace label). A pin with both a direct and a net connection shows
+  // only the direct one, so it gets no net label.
+  const direct = new Set<string>()
+  for (const t of traces) {
+    const ends = [t.points[0], t.points[t.points.length - 1]]
+    for (const p of ends) direct.add(`${p.x},${p.y}`)
+  }
+  for (const l of labels) direct.add(`${l.x},${l.y}`)
+
+  // Net labels on every net-connected pin without a direct connection (a pin
+  // can repeat a net, producing multiple labels).
+  const netNameLabels = blocks.flatMap((b) =>
+    b.pins
+      .filter((p) => p.net !== undefined && !direct.has(`${p.x},${p.y}`))
+      .flatMap((p) => boxedLabel(X(p.x), Y(p.y), p.side, p.net as string)),
+  )
+
+  // Broken-trace labels (numbered).
+  const brokenLabels = labels.flatMap((l) =>
+    boxedLabel(X(l.x), Y(l.y), l.side, l.label),
+  )
+  const netLabels = [...netNameLabels, ...brokenLabels]
 
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${fmt(width)}" height="${fmt(height)}" viewBox="0 0 ${fmt(width)} ${fmt(height)}">`,

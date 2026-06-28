@@ -8,6 +8,8 @@ export interface PlacedPin {
   side: PinSide
   x: number
   y: number
+  /** Net this pin connects to (when its connection targets a net), if any. */
+  net?: string
 }
 
 /** A component placed on the schematic, in schematic units (top-left origin). */

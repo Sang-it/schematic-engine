@@ -81,6 +81,15 @@ const PASSIVE_TIERS: Array<{
   { name: "inter-passive", match: (c) => c.passiveEndpoints >= 1 },
 ]
 
+/** The net a pin connects to, if its connection targets a net. */
+function netOfPin(
+  comp: { connections: Connections },
+  pinId: string,
+): string | undefined {
+  const t = comp.connections[pinId as keyof Connections]
+  return t && t.kind === "net" ? t.name : undefined
+}
+
 /** Pin-target connections of a component (net targets are ignored). */
 function pinEndpoints(comp: { connections: Connections }): PinEndpoint[] {
   const eps: PinEndpoint[] = []
@@ -438,12 +447,16 @@ function placeChipSchematic(
     0,
   )
   const minPinGap = maxPassiveExtent > 0 ? maxPassiveExtent + GAP_MINOR : 0
-  const { pins: chipPins, size: chipSize } = layoutChipPins(
+  const { pins: laidOutPins, size: chipSize } = layoutChipPins(
     anchor.pinPositions,
     anchor.schematicSize,
     sidePairs,
     minPinGap,
   )
+  const chipPins = laidOutPins.map((p) => ({
+    ...p,
+    net: netOfPin(anchor, p.pin),
+  }))
   const chipBlock: PlacedBlock = {
     type: "chip",
     name: anchor.name,
@@ -563,7 +576,10 @@ function placeChipSchematic(
       pins: [],
     }
     resolveCollision(box, [...blocks, ...reserved], g.axis, g.dir)
-    box.pins = resolvePins(box.x, box.y, g.pins)
+    box.pins = resolvePins(box.x, box.y, g.pins).map((p) => ({
+      ...p,
+      net: netOfPin(comp, p.pin),
+    }))
     blocks.push(box)
     placed.add(comp.name)
     for (const p of box.pins) placedPins.set(key(comp.name, p.pin), p)
