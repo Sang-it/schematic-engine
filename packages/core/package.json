@@ -1,0 +1,13 @@
+{
+  "name": "@schematic-engine/core",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@babel/parser": "^7.25.0",
+    "@babel/types": "^7.25.0",
+    "@schematic-engine/placement-solver": "workspace:*",
+    "@schematic-engine/trace-solver": "workspace:*"
+  }
+}
