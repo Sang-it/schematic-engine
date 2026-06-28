@@ -29,6 +29,10 @@
     "packages/trace-solver": {
       "name": "@schematic-engine/trace-solver",
       "version": "0.0.0",
+      "dependencies": {
+        "@schematic-engine/core": "workspace:*",
+        "@schematic-engine/placement-solver": "workspace:*",
+      },
     },
   },
   "packages": {

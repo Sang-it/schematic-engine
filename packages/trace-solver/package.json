@@ -3,5 +3,9 @@
   "version": "0.0.0",
   "type": "module",
   "module": "src/index.ts",
-  "types": "src/index.ts"
+  "types": "src/index.ts",
+  "dependencies": {
+    "@schematic-engine/core": "workspace:*",
+    "@schematic-engine/placement-solver": "workspace:*"
+  }
 }
