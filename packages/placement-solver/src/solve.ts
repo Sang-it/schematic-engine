@@ -120,7 +120,7 @@ function sameSidePairs(anchor: Chip, passives: TaggedPassive[]): SidePair[] {
       side: sideA,
       pinA: a.targetPin,
       pinB: b.targetPin,
-      minGap: comp.schematicSize.schematicWidth + GAP_MINOR,
+      minGap: comp.schematicSize.defaultSchematicWidth + GAP_MINOR,
     })
   }
   return pairs
@@ -430,20 +430,27 @@ function placeChipSchematic(
   placed: Set<string>
 } {
   // Same-side double passives force their two chip pins adjacent + spaced to
-  // fit, possibly growing the chip box.
+  // fit, possibly growing the chip box. The regular spacing is floored so two
+  // single passives on adjacent pins always fit (box grows when pins are dense).
   const sidePairs = sameSidePairs(anchor, passives)
+  const maxPassiveExtent = passives.reduce(
+    (m, p) => Math.max(m, p.comp.schematicSize.defaultSchematicHeight),
+    0,
+  )
+  const minPinGap = maxPassiveExtent > 0 ? maxPassiveExtent + GAP_MINOR : 0
   const { pins: chipPins, size: chipSize } = layoutChipPins(
     anchor.pinPositions,
     anchor.schematicSize,
     sidePairs,
+    minPinGap,
   )
   const chipBlock: PlacedBlock = {
     type: "chip",
     name: anchor.name,
     x: 0,
     y: 0,
-    width: chipSize.schematicWidth,
-    height: chipSize.schematicHeight,
+    width: chipSize.defaultSchematicWidth,
+    height: chipSize.defaultSchematicHeight,
     rotation: 0,
     pins: chipPins,
   }
@@ -485,8 +492,8 @@ function placeChipSchematic(
   /** Try to place one passive; returns false if it must wait for a neighbour. */
   function tryPlace(info: PInfo): boolean {
     const { type, comp, eps } = info
-    const pw = comp.schematicSize.schematicWidth
-    const ph = comp.schematicSize.schematicHeight
+    const pw = comp.schematicSize.defaultSchematicWidth
+    const ph = comp.schematicSize.defaultSchematicHeight
 
     const resolved = eps.map((e) => ({
       ...e,
@@ -623,14 +630,14 @@ function rowSchematic(passives: TaggedPassive[]): Placement {
   const blocks: PlacedBlock[] = []
   let cursorX = 0
   for (const { type, comp } of passives) {
-    const w = comp.schematicSize.schematicWidth
+    const w = comp.schematicSize.defaultSchematicWidth
     blocks.push({
       type,
       name: comp.name,
       x: cursorX,
       y: 0,
       width: w,
-      height: comp.schematicSize.schematicHeight,
+      height: comp.schematicSize.defaultSchematicHeight,
       rotation: 0,
       pins: [],
     })

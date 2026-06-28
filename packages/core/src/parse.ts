@@ -205,8 +205,8 @@ function schematicSize(
   const w = Number(raw.schematicWidth)
   const h = Number(raw.schematicHeight)
   return {
-    schematicWidth: Number.isFinite(w) ? w : def.schematicWidth,
-    schematicHeight: Number.isFinite(h) ? h : def.schematicHeight,
+    defaultSchematicWidth: Number.isFinite(w) ? w : def.defaultSchematicWidth,
+    defaultSchematicHeight: Number.isFinite(h) ? h : def.defaultSchematicHeight,
   }
 }
 

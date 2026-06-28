@@ -29,7 +29,8 @@ export function placeSequentially(ast: SchematicAst): PlacedBlock[] {
   const blocks: PlacedBlock[] = []
   let cursorX = 0
   for (const { type, comp } of components) {
-    const { schematicWidth: w, schematicHeight: h } = comp.schematicSize
+    const { defaultSchematicWidth: w, defaultSchematicHeight: h } =
+      comp.schematicSize
     const x = cursorX
     const y = 0
     blocks.push({

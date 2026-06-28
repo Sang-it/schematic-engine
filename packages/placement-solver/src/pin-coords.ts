@@ -21,7 +21,7 @@ export function computePinCoords(
   originX: number,
   originY: number,
 ): PlacedPin[] {
-  const { schematicWidth: w, schematicHeight: h } = size
+  const { defaultSchematicWidth: w, defaultSchematicHeight: h } = size
   const bySide: Record<PinSide, PinPosition[]> = {
     top: [],
     left: [],
@@ -78,6 +78,7 @@ export function layoutChipPins(
   pinPositions: PinPosition[],
   size: SchematicSize,
   pairs: SidePair[],
+  minPinGap = 0,
 ): { pins: PlacedPin[]; size: SchematicSize } {
   const bySide: Record<PinSide, string[]> = {
     top: [],
@@ -87,8 +88,8 @@ export function layoutChipPins(
   }
   for (const p of pinPositions) bySide[p.side].push(p.pin)
 
-  let width = size.schematicWidth
-  let height = size.schematicHeight
+  let width = size.defaultSchematicWidth
+  let height = size.defaultSchematicHeight
   // Per-side ordered pin list + the position of each pin along its edge.
   const order: Record<PinSide, string[]> = {
     top: [],
@@ -111,7 +112,8 @@ export function layoutChipPins(
     if (n === 0) continue
 
     const defaultDim = VERTICAL(side) ? height : width
-    const regularGap = defaultDim / (n + 1)
+    // Floor the spacing so two single passives on adjacent pins still fit.
+    const regularGap = Math.max(defaultDim / (n + 1), minPinGap)
 
     // Required gap before each pin (gap[0] = leading margin).
     const minGapBetween = (a: string, b: string) => {
@@ -163,7 +165,7 @@ export function layoutChipPins(
   }
   return {
     pins,
-    size: { schematicWidth: width, schematicHeight: height },
+    size: { defaultSchematicWidth: width, defaultSchematicHeight: height },
   }
 }
 

@@ -35,10 +35,14 @@ export type Pins = Partial<Record<PinId, string>>
 /** Parsed connections: pin id -> resolved target. */
 export type Connections = Partial<Record<PinId, ConnectionTarget>>
 
-/** Size of a component's schematic symbol, in schematic units. */
+/**
+ * Default size of a component's schematic symbol, in schematic units. The
+ * actual placed size can grow (e.g. to fit passives / pin spacing), so these
+ * fields are the defaults.
+ */
 export interface SchematicSize {
-  schematicWidth: number
-  schematicHeight: number
+  defaultSchematicWidth: number
+  defaultSchematicHeight: number
 }
 
 /** Default schematic symbol sizes per component type. */
@@ -47,9 +51,9 @@ export const DEFAULT_SCHEMATIC_SIZE: {
   resistor: SchematicSize
   capacitor: SchematicSize
 } = {
-  chip: { schematicWidth: 4, schematicHeight: 8 },
-  resistor: { schematicWidth: 1, schematicHeight: 0.5 },
-  capacitor: { schematicWidth: 1, schematicHeight: 0.5 },
+  chip: { defaultSchematicWidth: 4, defaultSchematicHeight: 8 },
+  resistor: { defaultSchematicWidth: 1, defaultSchematicHeight: 0.5 },
+  capacitor: { defaultSchematicWidth: 1, defaultSchematicHeight: 0.5 },
 }
 
 /** Which boundary edge a pin sits on. */
