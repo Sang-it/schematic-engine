@@ -167,6 +167,23 @@ test("a nine-chip board places, routes, and obeys every routing rule", () => {
   const segsOf = (t: { points: { x: number; y: number }[] }) =>
     t.points.slice(1).map((p, i) => ({ a: t.points[i], b: p }))
 
+  // Vertically-adjacent U5 and U7 are wired together — that connection routes as a
+  // trace (a short crossing path is taken when needed), it is not dropped to a
+  // label just because the clean route would be long.
+  const nameAt = new Map<string, string>()
+  for (const b of placement.blocks)
+    for (const p of b.pins) nameAt.set(`${p.x},${p.y}`, b.name)
+  const u5u7Routed = routed.traces.some((t) => {
+    const pair = [
+      nameAt.get(`${t.points[0].x},${t.points[0].y}`),
+      nameAt.get(`${t.points.at(-1)!.x},${t.points.at(-1)!.y}`),
+    ]
+      .sort()
+      .join("-")
+    return pair === "U5-U7"
+  })
+  expect(u5u7Routed).toBe(true)
+
   // Per-segment rules: Manhattan, no block interior, no chip-edge run, and a
   // passive edge only at the trace's own endpoints.
   for (const t of routed.traces) {
@@ -201,4 +218,4 @@ test("a nine-chip board places, routes, and obeys every routing rule", () => {
   }
 
   expect(astToRoutedSvg(ast)).toMatchSchematicSvg(import.meta.path)
-})
+}, 20000) // dense 9-chip board: routing is heavier than the default 5s budget

@@ -207,10 +207,15 @@ export function solveTraces(placement: Placement): RoutedSchematic {
       continue
     }
 
-    // Escalate: multi-bend route around the blocks (min overlaps, then crossings,
-    // then turns). Endpoint owner passives may be run along; chips and other
-    // passives can't.
-    const path = mazeRoute(
+    // Escalate: multi-bend route around the blocks. Accept a route only if it
+    // isn't a far detour (a path more than MAX_PATH_RATIO times the direct pin
+    // distance). Pass 1 minimises crossings; if its best route blows the budget
+    // (it would have to wander far to stay crossing-free), pass 2 takes the
+    // shortest path even if it crosses traces — a short crossing reads better
+    // than a label. Both still respect clearance and never enter/hug blocks.
+    const direct = Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
+    const budget = MAX_PATH_RATIO * direct
+    const clean = mazeRoute(
       a,
       b,
       obstacleBlocks,
@@ -218,10 +223,21 @@ export function solveTraces(placement: Placement): RoutedSchematic {
       endpointBlocks,
       currentEnds,
     )
-    // Accept the route only if it isn't a far detour: a path more than
-    // MAX_PATH_RATIO times the direct pin distance is dropped in favour of labels.
-    const direct = Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
-    if (path && pathLength(path) <= MAX_PATH_RATIO * direct) {
+    let path: Point[] | null =
+      clean && pathLength(clean) <= budget ? clean : null
+    if (!path) {
+      const short = mazeRoute(
+        a,
+        b,
+        obstacleBlocks,
+        routedSegments,
+        endpointBlocks,
+        currentEnds,
+        0, // crossWeight: crossings free -> shortest path
+      )
+      if (short && pathLength(short) <= budget) path = short
+    }
+    if (path) {
       addTrace(path, ends)
       continue
     }

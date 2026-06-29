@@ -67,10 +67,11 @@ type Dir = 0 | 1 // 0 = horizontal move, 1 = vertical move
 /**
  * Route a Manhattan (axis-aligned) multi-bend path from `a` to `b` on the Hanan
  * grid of the placement, avoiding block interiors. Among reachable paths it
- * minimises (trace overlaps, then crossings, then turns). A trace may overlap
- * another only when they share a connection — i.e. the routed segment's owner
- * endpoints intersect `currentEnds`. Returns the polyline (collinear points
- * merged) or null when no path clears the blocks.
+ * minimises (clearance violations, then crossings·crossWeight, then length, then
+ * turns). With `crossWeight = BIG` (default) crossings are avoided first; with
+ * `crossWeight = 0` crossings are free and the search returns the SHORTEST path
+ * that still respects clearance. Returns the polyline (collinear points merged)
+ * or null when no path clears the blocks.
  */
 export function mazeRoute(
   a: Point,
@@ -79,6 +80,7 @@ export function mazeRoute(
   routed: OwnedSegment[],
   endpointBlocks: PlacedBlock[] = [],
   currentEnds: ReadonlySet<string> = new Set(),
+  crossWeight: number = BIG,
 ): Point[] | null {
   // Hanan grid: block edges + a clearance channel just outside each edge + pin
   // coords + the two endpoints.
@@ -190,7 +192,13 @@ export function mazeRoute(
       const p2 = point(ni, nj)
       if (!passable(p1, p2)) continue
       const turn = id === startId || id === startId + 1 ? 0 : nd !== dir ? 1 : 0
-      const nc = cost + tooClose(p1, p2) * BIG2 + crossings(p1, p2) * BIG + turn
+      const len = Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y)
+      const nc =
+        cost +
+        tooClose(p1, p2) * BIG2 +
+        crossings(p1, p2) * crossWeight +
+        len +
+        turn
       const nid = (ni * H + nj) * 2 + nd
       if (nc < best[nid]) {
         best[nid] = nc
