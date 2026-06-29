@@ -5,8 +5,8 @@ import "./helpers"
 
 // Real-world-ish: an LDO feeds an MCU, which talks I2C to a sensor. The chips
 // are bridged by series resistors (power feed + SDA/SCL), so they form one
-// connected component laid out by direction: LDO -> MCU -> sensor. Each chip
-// also has its own decoupling capacitor.
+// connected component laid out on the chip grid by connection affinity (the
+// MCU, wired to both, lands between them). Each chip also has a decoupling cap.
 const CIRCUIT = `
   <chip name="U1"
     pins={{ pin1: "VDD", pin2: "SDA", pin3: "SCL", pin4: "GND" }}
@@ -40,9 +40,12 @@ test("real-world multi-chip (LDO -> MCU -> I2C sensor) renders to svg", () => {
   const u2 = blocks.find((b) => b.name === "U2")!
   const u3 = blocks.find((b) => b.name === "U3")!
 
-  // Direction chain: LDO (U3) left of MCU (U1) left of sensor (U2).
-  expect(u3.x).toBeLessThan(u1.x)
-  expect(u1.x).toBeLessThan(u2.x)
+  // The MCU (U1) is wired to both the LDO (U3) and the sensor (U2), so affinity
+  // places it between them: U1 sits horizontally between U2 and U3.
+  const lo = Math.min(u2.x, u3.x)
+  const hi = Math.max(u2.x, u3.x)
+  expect(u1.x).toBeGreaterThan(lo)
+  expect(u1.x).toBeLessThan(hi)
 
   // Every component placed (3 chips + 3 bridges + 4 caps = 10 blocks).
   expect(blocks).toHaveLength(10)

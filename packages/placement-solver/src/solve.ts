@@ -780,23 +780,9 @@ interface CrossEdge {
   b: number
   fromKey: string
   toKey: string
-  side: PinSide
 }
 
 const pinKey = (comp: string, pin: string) => `${comp}.${pin}`
-
-const OPPOSITE: Record<PinSide, PinSide> = {
-  left: "right",
-  right: "left",
-  top: "bottom",
-  bottom: "top",
-}
-const STEP: Record<PinSide, [number, number]> = {
-  left: [-1, 0],
-  right: [1, 0],
-  top: [0, -1],
-  bottom: [0, 1],
-}
 
 /** Map each placed pin to its local coordinate, keyed "component.pin". */
 function groupPinCoords(placement: Placement): Map<string, PlacedPin> {
@@ -829,15 +815,8 @@ function buildCrossEdges(
         const toKey = pinKey(ep.targetComp, ep.targetPin)
         if (seen.has(`${fromKey}->${toKey}`)) continue
         seen.add(`${fromKey}->${toKey}`)
-        const fromPin = g.pinCoord.get(fromKey)
-        if (!fromPin) continue
-        edges.push({
-          a: g.index,
-          b: target,
-          fromKey,
-          toKey,
-          side: fromPin.side,
-        })
+        if (!g.pinCoord.has(fromKey)) continue
+        edges.push({ a: g.index, b: target, fromKey, toKey })
       }
     }
   }
@@ -861,12 +840,98 @@ function connectedComponents(groups: Group[], edges: CrossEdge[]): number[][] {
 }
 
 /**
- * Lay out a connected component of chip groups on a 2D grid driven by the
- * cross-chip pin connections. A group reached from A along an edge whose exit
- * side is `s` is placed in the `s` direction from A (left/right/top/bottom),
- * stepping further if that cell is taken. Cells become coordinates by per-row
- * height / per-column width, each group centred in its cell (midplane both
- * axes). Cross-chip wires are then drawn between the bridged pins.
+ * Choose a grid cell `{c,r}` for each chip group in a connected component. The
+ * grid is `cols = max(3, ceil(n/3))` wide; chips occupy the first `n` slots
+ * row-major. The chip-to-slot assignment minimises the total Manhattan distance
+ * between connected chips (summed over `compEdges`, so a pair wired by several
+ * connections pulls harder). Components are small, so for n ≤ 9 every permutation
+ * is tried (Heap's algorithm, optimal); larger ones use greedy pairwise swaps.
+ */
+function assignGridCells(
+  indices: number[],
+  compEdges: CrossEdge[],
+  groups: Group[],
+): Map<number, { c: number; r: number }> {
+  const n = indices.length
+  const cols = Math.max(3, Math.ceil(n / 3))
+  const cellOfSlot = (s: number) => ({ c: s % cols, r: Math.floor(s / cols) })
+  const slotDist = (s1: number, s2: number) => {
+    const a = cellOfSlot(s1)
+    const b = cellOfSlot(s2)
+    return Math.abs(a.c - b.c) + Math.abs(a.r - b.r)
+  }
+  // arrangement: arr[slot] = group index in that slot (slots 0..n-1).
+  const base = [...indices].sort(
+    (x, y) => groups[y].priority - groups[x].priority || x - y,
+  )
+  const cost = (arr: number[]) => {
+    const slotOf = new Map<number, number>()
+    arr.forEach((g, s) => slotOf.set(g, s))
+    let total = 0
+    for (const e of compEdges) {
+      total += slotDist(slotOf.get(e.a) as number, slotOf.get(e.b) as number)
+    }
+    return total
+  }
+
+  let best = [...base]
+  let bestCost = cost(best)
+
+  if (n <= 9) {
+    // Exhaustive: Heap's algorithm over all permutations; keep the min cost.
+    const arr = [...base]
+    const counter = new Array(n).fill(0)
+    let i = 0
+    while (i < n) {
+      if (counter[i] < i) {
+        const swap = i % 2 === 0 ? 0 : counter[i]
+        ;[arr[swap], arr[i]] = [arr[i], arr[swap]]
+        const k = cost(arr)
+        if (k < bestCost) {
+          bestCost = k
+          best = [...arr]
+        }
+        counter[i]++
+        i = 0
+      } else {
+        counter[i] = 0
+        i++
+      }
+    }
+  } else {
+    // Greedy pairwise-swap local search from the base order.
+    const arr = [...base]
+    let improved = true
+    while (improved) {
+      improved = false
+      for (let a = 0; a < n; a++) {
+        for (let b = a + 1; b < n; b++) {
+          ;[arr[a], arr[b]] = [arr[b], arr[a]]
+          const k = cost(arr)
+          if (k < bestCost) {
+            bestCost = k
+            improved = true
+          } else {
+            ;[arr[a], arr[b]] = [arr[b], arr[a]] // revert
+          }
+        }
+      }
+      if (improved) best = [...arr]
+    }
+  }
+
+  const cellMap = new Map<number, { c: number; r: number }>()
+  best.forEach((g, s) => cellMap.set(g, cellOfSlot(s)))
+  return cellMap
+}
+
+/**
+ * Lay out a connected component of chip groups on a fixed 2D grid, then choose
+ * the chip-to-cell assignment that minimises connection distance, so connected
+ * chips sit in neighbouring cells. The grid is `cols = max(3, ceil(n/3))` wide
+ * (at least three chips per row, ~3 rows otherwise). Cells become coordinates by
+ * per-row height / per-column width, each group centred in its cell; cross-chip
+ * wires are then drawn between adjacent bridged pins.
  */
 function gridPlaceComponent(
   indices: number[],
@@ -878,49 +943,8 @@ function gridPlaceComponent(
 
   const inComp = new Set(indices)
   const compEdges = edges.filter((e) => inComp.has(e.a) && inComp.has(e.b))
-  const cell = new Map<number, { c: number; r: number }>()
-  const occupied = new Map<string, number>()
-  const queue: number[] = []
 
-  const place = (idx: number, c: number, r: number) => {
-    cell.set(idx, { c, r })
-    occupied.set(`${c},${r}`, idx)
-    queue.push(idx)
-  }
-  const placeDir = (
-    idx: number,
-    from: { c: number; r: number },
-    side: PinSide,
-  ) => {
-    const [dc, dr] = STEP[side]
-    let c = from.c + dc
-    let r = from.r + dr
-    while (occupied.has(`${c},${r}`)) {
-      c += dc
-      r += dr
-    }
-    place(idx, c, r)
-  }
-
-  // Seed with the highest-priority group, then BFS the rest of the component.
-  const order = [...indices].sort(
-    (x, y) => groups[y].priority - groups[x].priority,
-  )
-  for (const seed of order) {
-    if (cell.has(seed)) continue
-    let r = 0
-    while (occupied.has(`0,${r}`)) r++
-    place(seed, 0, r)
-    while (queue.length) {
-      const cur = queue.shift() as number
-      const at = cell.get(cur) as { c: number; r: number }
-      for (const e of compEdges) {
-        if (e.a === cur && !cell.has(e.b)) placeDir(e.b, at, e.side)
-        else if (e.b === cur && !cell.has(e.a))
-          placeDir(e.a, at, OPPOSITE[e.side])
-      }
-    }
-  }
+  const cell = assignGridCells(indices, compEdges, groups)
 
   // Normalize cells, then size columns / rows.
   const cells = indices.map((i) => cell.get(i) as { c: number; r: number })

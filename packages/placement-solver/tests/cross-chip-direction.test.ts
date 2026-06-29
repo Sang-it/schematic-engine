@@ -3,9 +3,10 @@ import { expect, test } from "bun:test"
 import { solveSchematic } from "../src/index"
 import "./helpers"
 
-test("a bridged chip is placed on the side the connection exits, with a cross wire", () => {
-  // RX is anchored to U1.pin1 (U1's LEFT edge); its outward pin faces left and
-  // wires to U2. So U2 must sit to the LEFT of U1, and a cross wire is drawn.
+test("two chips bridged by a resistor are placed in adjacent grid cells with a cross wire", () => {
+  // U1 and U2 are bridged by RX, so they form one component laid out on the chip
+  // grid: they land in neighbouring cells (different positions) and a cross wire
+  // is drawn between U2.pin1 and RX's outward pin.
   const { blocks, connections } = solveSchematic(
     build(`
       <chip name="U1" pinPosition={{ left: ["pin1"], right: ["pin2", "pin3"] }} connections={{ pin1: "net.A", pin2: "net.B", pin3: "net.C" }} />
@@ -15,7 +16,7 @@ test("a bridged chip is placed on the side the connection exits, with a cross wi
   )
   const u1 = blocks.find((b) => b.name === "U1")!
   const u2 = blocks.find((b) => b.name === "U2")!
-  expect(u2.x).toBeLessThan(u1.x) // exit-left -> U2 left of U1
+  expect(u1.x !== u2.x || u1.y !== u2.y).toBe(true) // distinct cells
 
   // A cross wire connects U2.pin1 to RX's outward pin.
   const u2Pin = u2.pins.find((p) => p.pin === "pin1")!

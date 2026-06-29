@@ -5,6 +5,10 @@ import type { Point } from "./types"
  * trace that merely grazes a block edge isn't treated as blocked. */
 export const EPS = 0.01
 
+/** Minimum gap a trace keeps from blocks it isn't connecting to and from
+ * parallel traces it doesn't share a connection with. */
+export const CLEARANCE = 0.5
+
 /** True if the segment p1->p2 passes through the rect's (shrunk) interior. */
 export function segmentHitsRect(
   p1: Point,
@@ -71,13 +75,68 @@ export function runsAlongEdge(
 }
 
 /**
+ * True if the axis-aligned segment runs PARALLEL to one of rect's edges within a
+ * `clearance` band of it AND its projection overlaps that edge's extent — i.e. it
+ * hugs the side of the block. Distance 0 (running exactly along the edge) is
+ * included. A perpendicular approach, or a parallel run beyond the block's extent
+ * (e.g. a pin stub leaving outward), is NOT a hug.
+ */
+function hugsEdge(
+  p1: Point,
+  p2: Point,
+  rect: PlacedBlock,
+  clearance: number,
+): boolean {
+  const left = rect.x
+  const right = rect.x + rect.width
+  const top = rect.y
+  const bottom = rect.y + rect.height
+  if (p1.y === p2.y) {
+    // horizontal: parallel to the top/bottom edges
+    if (
+      Math.abs(p1.y - top) >= clearance &&
+      Math.abs(p1.y - bottom) >= clearance
+    )
+      return false
+    const x0 = Math.min(p1.x, p2.x)
+    const x1 = Math.max(p1.x, p2.x)
+    return Math.min(x1, right) - Math.max(x0, left) > EPS
+  }
+  if (p1.x === p2.x) {
+    // vertical: parallel to the left/right edges
+    if (
+      Math.abs(p1.x - left) >= clearance &&
+      Math.abs(p1.x - right) >= clearance
+    )
+      return false
+    const y0 = Math.min(p1.y, p2.y)
+    const y1 = Math.max(p1.y, p2.y)
+    return Math.min(y1, bottom) - Math.max(y0, top) > EPS
+  }
+  return false
+}
+
+/** A rectangle grown by `m` on every side. */
+function inflate(r: PlacedBlock, m: number): PlacedBlock {
+  return {
+    ...r,
+    x: r.x - m,
+    y: r.y - m,
+    width: r.width + 2 * m,
+    height: r.height + 2 * m,
+  }
+}
+
+/**
  * Build a predicate that decides whether an axis-aligned segment may be drawn,
  * enforcing the routing rules uniformly for the straight/L fast paths and the
  * maze:
- *   1. it may not pass through any block's interior,
- *   2. it may never run along a chip edge,
- *   3. it may run along a passive edge only if that passive owns one of the
- *      route's endpoints (passed in `endpointBlocks`).
+ *   1. it must stay CLEARANCE away from every chip / passive it isn't an endpoint
+ *      of (full clearance gap on all sides),
+ *   2. it may not enter an endpoint block's interior, and may not HUG an endpoint
+ *      chip's side (run parallel within CLEARANCE over its extent) — but it may
+ *      approach the pin perpendicularly,
+ *   3. an endpoint passive may be touched / run along (to reach the pin).
  */
 export function makeSegmentPassable(
   blocks: PlacedBlock[],
@@ -86,10 +145,16 @@ export function makeSegmentPassable(
   const ep = new Set(endpointBlocks)
   return (p1, p2) =>
     !blocks.some((blk) => {
-      if (segmentHitsRect(p1, p2, blk)) return true // crosses interior
-      if (!runsAlongEdge(p1, p2, blk)) return false
-      // chips: never along an edge; passives: only the route's own endpoints.
-      return blk.type === "chip" || !ep.has(blk)
+      if (!ep.has(blk)) {
+        // Non-endpoint block: keep a full clearance gap (EPS shrink in
+        // segmentHitsRect keeps a trace exactly on the CLEARANCE lane legal).
+        return segmentHitsRect(p1, p2, inflate(blk, CLEARANCE))
+      }
+      // Endpoint block: never enter the interior.
+      if (segmentHitsRect(p1, p2, blk)) return true
+      if (blk.type !== "chip") return false // endpoint passive: may touch / run along
+      // Endpoint chip: don't hug its side (but reach the pin perpendicularly).
+      return hugsEdge(p1, p2, blk, CLEARANCE)
     })
 }
 
@@ -108,21 +173,27 @@ export interface OwnedSegment extends Segment {
 }
 
 /**
- * True if axis-aligned segments s1, s2 are collinear (same orientation, same
- * line) and their extents overlap by more than EPS — i.e. they run on top of
- * one another. A shared single endpoint (zero-length overlap) does NOT count.
+ * True if axis-aligned segments s1, s2 run PARALLEL (same orientation), their
+ * projections overlap (by more than EPS), and the perpendicular gap between their
+ * lines is less than `clearance`. Covers both an exact overlap (gap 0) and two
+ * traces running too close alongside each other. A shared single endpoint
+ * (zero-length projection overlap) does NOT count.
  */
-export function segmentsOverlap(s1: Segment, s2: Segment): boolean {
+export function segmentsTooClose(
+  s1: Segment,
+  s2: Segment,
+  clearance: number,
+): boolean {
   const v1 = s1.a.x === s1.b.x
   const v2 = s2.a.x === s2.b.x
   if (v1 !== v2) return false // not parallel
   if (v1) {
-    if (s1.a.x !== s2.a.x) return false // different vertical lines
+    if (Math.abs(s1.a.x - s2.a.x) >= clearance) return false
     const lo = Math.max(Math.min(s1.a.y, s1.b.y), Math.min(s2.a.y, s2.b.y))
     const hi = Math.min(Math.max(s1.a.y, s1.b.y), Math.max(s2.a.y, s2.b.y))
     return hi - lo > EPS
   }
-  if (s1.a.y !== s2.a.y) return false // different horizontal lines
+  if (Math.abs(s1.a.y - s2.a.y) >= clearance) return false
   const lo = Math.max(Math.min(s1.a.x, s1.b.x), Math.min(s2.a.x, s2.b.x))
   const hi = Math.min(Math.max(s1.a.x, s1.b.x), Math.max(s2.a.x, s2.b.x))
   return hi - lo > EPS

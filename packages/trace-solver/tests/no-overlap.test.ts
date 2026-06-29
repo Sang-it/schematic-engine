@@ -1,6 +1,6 @@
 import type { Placement } from "@schematic-engine/placement-solver"
 import { expect, test } from "bun:test"
-import { type Segment, segmentsOverlap } from "../src/geom"
+import { CLEARANCE, type Segment, segmentsTooClose } from "../src/geom"
 import { solveTraces } from "../src/index"
 import "./helpers"
 
@@ -57,12 +57,13 @@ test("two traces that don't share a connection are routed without overlapping", 
   expect(traces).toHaveLength(2)
   expect(labels).toHaveLength(0)
 
-  // No collinear overlap between the two (they share no endpoint).
-  let overlaps = 0
+  // They share no endpoint, so they must keep a full CLEARANCE gap — never
+  // overlapping nor running parallel too close.
+  let tooClose = 0
   for (const s1 of segmentsOf(traces[0]))
     for (const s2 of segmentsOf(traces[1]))
-      if (segmentsOverlap(s1, s2)) overlaps++
-  expect(overlaps).toBe(0)
+      if (segmentsTooClose(s1, s2, CLEARANCE)) tooClose++
+  expect(tooClose).toBe(0)
 })
 
 test("two traces sharing a pin may overlap", () => {
@@ -112,13 +113,14 @@ test("two traces sharing a pin may overlap", () => {
   expect(traces).toHaveLength(2)
   expect(labels).toHaveLength(0)
 
-  // The two traces share the pin (4,3) and do overlap — which is permitted.
+  // The two traces share the pin (4,3) and run together — permitted because they
+  // share a connection (the clearance rule exempts shared-endpoint traces).
   expect([...endsOf(traces[0])].some((k) => endsOf(traces[1]).has(k))).toBe(
     true,
   )
-  let overlaps = 0
+  let together = 0
   for (const s1 of segmentsOf(traces[0]))
     for (const s2 of segmentsOf(traces[1]))
-      if (segmentsOverlap(s1, s2)) overlaps++
-  expect(overlaps).toBeGreaterThan(0)
+      if (segmentsTooClose(s1, s2, CLEARANCE)) together++
+  expect(together).toBeGreaterThan(0)
 })

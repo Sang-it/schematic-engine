@@ -5,15 +5,29 @@ import type {
   PlacedPin,
 } from "@schematic-engine/placement-solver"
 import {
+  CLEARANCE,
   type OwnedSegment,
   type Segment,
   makeSegmentPassable,
-  segmentsOverlap,
+  segmentsTooClose,
 } from "./geom"
 import { mazeRoute } from "./maze"
 import type { Point, RoutedSchematic } from "./types"
 
 const key = (x: number, y: number) => `${x},${y}`
+
+/** A path is dropped (and labelled) when it is longer than this multiple of the
+ * direct pin-to-pin distance — a far-wrapping detour reads worse than a label. */
+const MAX_PATH_RATIO = 3
+
+/** Total Manhattan length of a polyline. */
+const pathLength = (pts: Point[]): number => {
+  let n = 0
+  for (let i = 1; i < pts.length; i++) {
+    n += Math.abs(pts[i].x - pts[i - 1].x) + Math.abs(pts[i].y - pts[i - 1].y)
+  }
+  return n
+}
 
 /** Segments of a polyline trace. */
 const segmentsOf = (pts: Point[]): Segment[] =>
@@ -150,17 +164,18 @@ export function solveTraces(placement: Placement): RoutedSchematic {
     // share one (the same pin). Reject overlap with any non-sharing routed trace.
     const ends = [key(a.x, a.y), key(b.x, b.y)] as const
     const currentEnds = new Set<string>(ends)
-    const overlapForbidden = (p1: Point, p2: Point) => {
+    const tooCloseToTrace = (p1: Point, p2: Point) => {
       const seg = { a: p1, b: p2 }
       return routedSegments.some(
         (r) =>
-          !r.ends.some((e) => currentEnds.has(e)) && segmentsOverlap(seg, r),
+          !r.ends.some((e) => currentEnds.has(e)) &&
+          segmentsTooClose(seg, r, CLEARANCE),
       )
     }
 
     // Straight only when the pins share an axis (traces are Manhattan).
     const axisAligned = a.x === b.x || a.y === b.y
-    if (axisAligned && passable(a, b) && !overlapForbidden(a, b)) {
+    if (axisAligned && passable(a, b) && !tooCloseToTrace(a, b)) {
       addTrace([a, b], ends)
       continue
     }
@@ -184,8 +199,8 @@ export function solveTraces(placement: Placement): RoutedSchematic {
       (corner) =>
         passable(a, corner) &&
         passable(corner, b) &&
-        !overlapForbidden(a, corner) &&
-        !overlapForbidden(corner, b),
+        !tooCloseToTrace(a, corner) &&
+        !tooCloseToTrace(corner, b),
     )
     if (elbow) {
       addTrace([a, elbow, b], ends)
@@ -203,7 +218,10 @@ export function solveTraces(placement: Placement): RoutedSchematic {
       endpointBlocks,
       currentEnds,
     )
-    if (path) {
+    // Accept the route only if it isn't a far detour: a path more than
+    // MAX_PATH_RATIO times the direct pin distance is dropped in favour of labels.
+    const direct = Math.abs(a.x - b.x) + Math.abs(a.y - b.y)
+    if (path && pathLength(path) <= MAX_PATH_RATIO * direct) {
       addTrace(path, ends)
       continue
     }

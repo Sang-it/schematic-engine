@@ -1,13 +1,16 @@
 import type { PlacedBlock } from "@schematic-engine/placement-solver"
-import { type OwnedSegment, makeSegmentPassable, segmentsOverlap } from "./geom"
+import {
+  CLEARANCE,
+  type OwnedSegment,
+  makeSegmentPassable,
+  segmentsTooClose,
+} from "./geom"
 import type { Point } from "./types"
 
 /** Crossings dominate turns in the lexical cost (BIG >> any turn count). */
 const BIG = 1_000_000
-/** Overlaps dominate crossings (BIG2 >> any crossings*BIG). */
+/** Clearance violations dominate crossings (BIG2 >> any crossings*BIG). */
 const BIG2 = 1_000_000_000_000
-/** Offset of the clearance routing channels just outside each block edge. */
-const CLEARANCE = 0.5
 
 const sortedUnique = (ns: number[]): number[] =>
   [...new Set(ns)].sort((a, b) => a - b)
@@ -141,14 +144,14 @@ export function mazeRoute(
     }
     return n
   }
-  // Collinear overlaps with routed traces that DON'T share a connection with the
-  // current route (their owner endpoints are disjoint from currentEnds).
-  const overlaps = (p1: Point, p2: Point) => {
+  // Routed traces that DON'T share a connection with the current route (owner
+  // endpoints disjoint from currentEnds) and run parallel within CLEARANCE.
+  const tooClose = (p1: Point, p2: Point) => {
     const seg = { a: p1, b: p2 }
     let n = 0
     for (const r of routed) {
       if (r.ends.some((e) => currentEnds.has(e))) continue // shared connection
-      if (segmentsOverlap(seg, r)) n++
+      if (segmentsTooClose(seg, r, CLEARANCE)) n++
     }
     return n
   }
@@ -187,7 +190,7 @@ export function mazeRoute(
       const p2 = point(ni, nj)
       if (!passable(p1, p2)) continue
       const turn = id === startId || id === startId + 1 ? 0 : nd !== dir ? 1 : 0
-      const nc = cost + overlaps(p1, p2) * BIG2 + crossings(p1, p2) * BIG + turn
+      const nc = cost + tooClose(p1, p2) * BIG2 + crossings(p1, p2) * BIG + turn
       const nid = (ni * H + nj) * 2 + nd
       if (nc < best[nid]) {
         best[nid] = nc

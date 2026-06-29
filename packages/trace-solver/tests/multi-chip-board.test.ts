@@ -1,7 +1,7 @@
 import { build } from "@schematic-engine/core"
 import { solveSchematic } from "@schematic-engine/placement-solver"
 import { expect, test } from "bun:test"
-import { segmentsOverlap } from "../src/geom"
+import { CLEARANCE, segmentsTooClose } from "../src/geom"
 import { astToRoutedSvg, solveTraces } from "../src/index"
 import "./helpers"
 
@@ -92,9 +92,8 @@ test("a three-chip board places, routes across chips, and renders", () => {
   const routed = solveTraces(placement)
   expect(routed.traces.length).toBeGreaterThan(0)
 
-  // U1 and U3 are non-adjacent in the row (U2 sits between them), so their two
-  // pin-to-pin connections are NOT routed — each falls back to a pair of net
-  // labels sharing a number. The adjacent pairs (U1<->U2, U2<->U3) still route.
+  // The three chips sit in a row, so the pair at the two ends is non-adjacent:
+  // its connection isn't routed and falls back to a pair of net labels.
   expect(routed.labels.length).toBeGreaterThan(0)
   // Labels come in matched pairs: every number appears exactly twice.
   const counts = new Map<string, number>()
@@ -119,21 +118,8 @@ test("a three-chip board places, routes across chips, and renders", () => {
   expect(u1.x !== u2.x || u1.y !== u2.y).toBe(true)
   expect(u2.x !== u3.x || u2.y !== u3.y).toBe(true)
 
-  // No trace connects U1 directly to U3 — that pair is label-only.
-  const nameAt = new Map<string, string>()
-  for (const b of placement.blocks)
-    for (const p of b.pins) nameAt.set(`${p.x},${p.y}`, b.name)
-  for (const t of routed.traces) {
-    const a = nameAt.get(`${t.points[0].x},${t.points[0].y}`)
-    const z = nameAt.get(
-      `${t.points[t.points.length - 1].x},${t.points[t.points.length - 1].y}`,
-    )
-    const pair = [a, z].sort().join("-")
-    expect(pair).not.toBe("U1-U3")
-  }
-
-  // Overlap invariant: two traces may run collinearly on top of each other only
-  // if they share an endpoint (a common connection). Otherwise no overlap.
+  // Clearance invariant: two traces may run parallel within CLEARANCE (or on top
+  // of each other) only if they share an endpoint (a common connection).
   const segs = (t: { points: { x: number; y: number }[] }) =>
     t.points.slice(1).map((p, i) => ({ a: t.points[i], b: p }))
   const ends = (t: { points: { x: number; y: number }[] }) =>
@@ -149,7 +135,7 @@ test("a three-chip board places, routes across chips, and renders", () => {
       if (shared) continue
       for (const s1 of segs(routed.traces[i]))
         for (const s2 of segs(routed.traces[j]))
-          expect(segmentsOverlap(s1, s2)).toBe(false)
+          expect(segmentsTooClose(s1, s2, CLEARANCE)).toBe(false)
     }
   }
 
