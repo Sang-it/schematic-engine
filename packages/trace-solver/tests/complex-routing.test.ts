@@ -19,7 +19,7 @@ const PLACEMENT: Placement = {
       rotation: 0,
       pins: [
         { pin: "pin1", side: "right", x: 4, y: 1 },
-        { pin: "pin2", side: "right", x: 4, y: 5 },
+        { pin: "pin2", side: "right", x: 4, y: 5.5 },
       ],
     },
     // Straight target: same y as U1.pin1, nothing in between.
@@ -120,7 +120,7 @@ const PLACEMENT: Placement = {
   ],
   connections: [
     { x1: 4, y1: 1, x2: 8, y2: 1 }, // straight
-    { x1: 4, y1: 5, x2: 10, y2: 2 }, // L-bend around OBS
+    { x1: 4, y1: 5.5, x2: 10, y2: 2 }, // L-bend around OBS
     { x1: 2, y1: 10, x2: 2, y2: 14 }, // broken -> label 1
     { x1: 8, y1: 10, x2: 8, y2: 14 }, // broken -> label 2
   ],
@@ -133,7 +133,7 @@ test("complex routing: straight, L-bend, and broken net labels", () => {
   expect(routed.traces).toHaveLength(2)
   expect(routed.traces.map((t) => t.points.length).sort()).toEqual([2, 3])
   const bend = routed.traces.find((t) => t.points.length === 3)!
-  expect(bend.points[1]).toEqual({ x: 10, y: 5 }) // corner
+  expect(bend.points[1]).toEqual({ x: 10, y: 5.5 }) // corner
 
   // Two broken traces -> 4 labels numbered 1,1,2,2.
   expect(routed.labels.map((l) => l.label)).toEqual(["1", "1", "2", "2"])

@@ -1,9 +1,11 @@
 import type { PlacedBlock } from "@schematic-engine/placement-solver"
-import { type Segment, runsAlongEdge, segmentHitsRect } from "./geom"
+import { type OwnedSegment, makeSegmentPassable, segmentsOverlap } from "./geom"
 import type { Point } from "./types"
 
 /** Crossings dominate turns in the lexical cost (BIG >> any turn count). */
 const BIG = 1_000_000
+/** Overlaps dominate crossings (BIG2 >> any crossings*BIG). */
+const BIG2 = 1_000_000_000_000
 /** Offset of the clearance routing channels just outside each block edge. */
 const CLEARANCE = 0.5
 
@@ -62,15 +64,18 @@ type Dir = 0 | 1 // 0 = horizontal move, 1 = vertical move
 /**
  * Route a Manhattan (axis-aligned) multi-bend path from `a` to `b` on the Hanan
  * grid of the placement, avoiding block interiors. Among reachable paths it
- * minimises (trace crossings, then turns). Returns the polyline (collinear
- * points merged) or null when no path clears the blocks.
+ * minimises (trace overlaps, then crossings, then turns). A trace may overlap
+ * another only when they share a connection — i.e. the routed segment's owner
+ * endpoints intersect `currentEnds`. Returns the polyline (collinear points
+ * merged) or null when no path clears the blocks.
  */
 export function mazeRoute(
   a: Point,
   b: Point,
   blocks: PlacedBlock[],
-  routed: Segment[],
+  routed: OwnedSegment[],
   endpointBlocks: PlacedBlock[] = [],
+  currentEnds: ReadonlySet<string> = new Set(),
 ): Point[] | null {
   // Hanan grid: block edges + a clearance channel just outside each edge + pin
   // coords + the two endpoints.
@@ -100,14 +105,7 @@ export function mazeRoute(
   const bx = xi.get(b.x) as number
   const by = yi.get(b.y) as number
 
-  const endpointSet = new Set(endpointBlocks)
-  const passable = (p1: Point, p2: Point) =>
-    !blocks.some((blk) => {
-      if (segmentHitsRect(p1, p2, blk)) return true // crosses interior
-      // Running ALONG an edge: never on chips; on passives only if not an endpoint.
-      if (!runsAlongEdge(p1, p2, blk)) return false
-      return blk.type === "chip" || !endpointSet.has(blk)
-    })
+  const passable = makeSegmentPassable(blocks, endpointBlocks)
   // Crossings of one grid sub-edge (p1->p2) with the already-routed segments.
   // The path is split at every grid line, so a routed trace usually crosses
   // exactly AT a shared vertex of two consecutive sub-edges. A strict-interior
@@ -140,6 +138,17 @@ export function mazeRoute(
         const ryhi = Math.max(r.a.y, r.b.y)
         if (y > rylo && y < ryhi && x >= xlo && x < xhi) n++
       }
+    }
+    return n
+  }
+  // Collinear overlaps with routed traces that DON'T share a connection with the
+  // current route (their owner endpoints are disjoint from currentEnds).
+  const overlaps = (p1: Point, p2: Point) => {
+    const seg = { a: p1, b: p2 }
+    let n = 0
+    for (const r of routed) {
+      if (r.ends.some((e) => currentEnds.has(e))) continue // shared connection
+      if (segmentsOverlap(seg, r)) n++
     }
     return n
   }
@@ -178,7 +187,7 @@ export function mazeRoute(
       const p2 = point(ni, nj)
       if (!passable(p1, p2)) continue
       const turn = id === startId || id === startId + 1 ? 0 : nd !== dir ? 1 : 0
-      const nc = cost + crossings(p1, p2) * BIG + turn
+      const nc = cost + overlaps(p1, p2) * BIG2 + crossings(p1, p2) * BIG + turn
       const nid = (ni * H + nj) * 2 + nd
       if (nc < best[nid]) {
         best[nid] = nc

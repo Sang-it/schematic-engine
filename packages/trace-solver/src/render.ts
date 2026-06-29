@@ -103,10 +103,10 @@ export function renderRoutedSvg(routed: RoutedSchematic): string {
   const width = (maxX - minX) * SCALE + pad * 2
   const height = (maxY - minY) * SCALE + pad * 2
 
-  // Traces first so they sit under the symbols. Solid black polylines.
+  // Traces first so they sit under the symbols. Solid blue polylines.
   const wires = traces.map((t) => {
     const pts = t.points.map((p) => `${fmt(X(p.x))},${fmt(Y(p.y))}`).join(" ")
-    return `  <polyline points="${pts}" fill="none" stroke="black" stroke-width="1" />`
+    return `  <polyline points="${pts}" fill="none" stroke="blue" stroke-width="1" />`
   })
 
   const symbols = blocks.map((b) => {

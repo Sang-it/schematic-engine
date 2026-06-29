@@ -36,7 +36,9 @@ function pinNumber(id: string): string {
 
 /** Render a full placement to a deterministic SVG string. */
 export function renderSchematicSvg(placement: Placement): string {
-  const { blocks, connections } = placement
+  const { blocks } = placement
+  // Label-only connections (non-adjacent chips) are not drawn as wires here.
+  const connections = placement.connections.filter((c) => c.routable !== false)
 
   // Bounds in schematic units (blocks may sit at negative coordinates).
   const xs: number[] = []

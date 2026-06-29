@@ -31,6 +31,13 @@ export interface PlacedConnection {
   y1: number
   x2: number
   y2: number
+  /**
+   * Whether the trace solver should route this connection. Absent / true: route
+   * as usual. False: the two endpoints are too far apart to wire cleanly (e.g.
+   * non-adjacent chips in the grid) — the trace solver must label both ends with
+   * a shared net-label number instead of drawing a wire.
+   */
+  routable?: boolean
 }
 
 /** Full placement result: positioned blocks plus the wires between them. */

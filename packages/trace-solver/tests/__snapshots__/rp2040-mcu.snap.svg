@@ -1,23 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="306.229" height="437.133" viewBox="0 0 306.229 437.133">
-  <polyline points="28.4,252.4 28.4,247.4 78.4,247.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="28.4,272.4 28.4,277.4 78.4,277.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="92.114,23.4 87.114,23.4 87.114,73.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="112.114,23.4 117.114,23.4 117.114,73.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="28.4,89.067 28.4,84.067 78.4,84.067" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="28.4,109.067 28.4,114.067 78.4,114.067" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="272.829,103.4 272.829,98.4 222.829,98.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="272.829,123.4 272.829,128.4 222.829,128.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="89.114,368.733 84.114,368.733 84.114,318.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="109.114,368.733 114.114,368.733 114.114,318.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="38.4,227.4 78.4,227.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="38.4,207.4 78.4,207.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="134.114,358.733 134.114,318.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="114.114,398.733 114.114,318.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="262.829,148.4 222.829,148.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="262.829,168.4 222.829,168.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="262.829,188.4 222.829,188.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="272.829,63.4 272.829,103.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="272.829,213.4 287.829,213.4 287.829,123.4 272.829,123.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="28.4,252.4 28.4,247.4 78.4,247.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="28.4,272.4 28.4,277.4 78.4,277.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="92.114,23.4 87.114,23.4 87.114,73.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="112.114,23.4 117.114,23.4 117.114,73.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="28.4,89.067 28.4,84.067 78.4,84.067" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="28.4,109.067 28.4,114.067 78.4,114.067" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="272.829,103.4 272.829,98.4 222.829,98.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="272.829,123.4 272.829,128.4 222.829,128.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="89.114,368.733 84.114,368.733 84.114,318.733" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="109.114,368.733 114.114,368.733 114.114,318.733" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="38.4,227.4 78.4,227.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="38.4,207.4 78.4,207.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="134.114,358.733 134.114,318.733" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="114.114,398.733 114.114,318.733" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="262.829,148.4 222.829,148.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="262.829,168.4 222.829,168.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="262.829,188.4 222.829,188.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="272.829,63.4 272.829,103.4" fill="none" stroke="blue" stroke-width="1" />
+  <polyline points="272.829,213.4 287.829,213.4 287.829,123.4 272.829,123.4" fill="none" stroke="blue" stroke-width="1" />
   <rect x="78.4" y="73.4" width="144.429" height="245.333" fill="#f5e6a8" stroke="black" stroke-width="1" />
   <circle cx="87.114" cy="73.4" r="1.5" fill="black" />
   <text x="87.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>

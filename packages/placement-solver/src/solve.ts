@@ -726,6 +726,7 @@ function shift(sub: Placement, dx: number, dy: number): Placement {
       pins: b.pins.map((p) => ({ ...p, x: p.x + dx, y: p.y + dy })),
     })),
     connections: sub.connections.map((c) => ({
+      ...c,
       x1: c.x1 + dx,
       y1: c.y1 + dy,
       x2: c.x2 + dx,
@@ -971,13 +972,28 @@ function gridPlaceComponent(
     }
   })
 
-  // Draw the cross-chip wires now that both ends share this space.
+  // Draw the cross-chip wires now that both ends share this space. Each electric
+  // connection appears as two edges (traces desugar both ways), so dedupe by the
+  // unordered pin pair. Only adjacent chips (neighbouring grid cells) get a wire;
+  // chips further apart are tagged unroutable so the trace solver labels them.
+  const drawn = new Set<string>()
   for (const e of compEdges) {
+    const pairKey = [e.fromKey, e.toKey].sort().join("|")
+    if (drawn.has(pairKey)) continue
+    drawn.add(pairKey)
     const from = globalPins.get(e.fromKey)
     const to = globalPins.get(e.toKey)
-    if (from && to) {
-      connections.push({ x1: from.x, y1: from.y, x2: to.x, y2: to.y })
-    }
+    if (!from || !to) continue
+    const ca = cell.get(e.a) as { c: number; r: number }
+    const cb = cell.get(e.b) as { c: number; r: number }
+    const adjacent = Math.abs(ca.c - cb.c) + Math.abs(ca.r - cb.r) === 1
+    connections.push({
+      x1: from.x,
+      y1: from.y,
+      x2: to.x,
+      y2: to.y,
+      routable: adjacent ? undefined : false,
+    })
   }
   return { blocks, connections }
 }

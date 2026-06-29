@@ -4,26 +4,29 @@ import { solveTraces } from "../src/index"
 import "./helpers"
 
 test("a blocked straight line falls back to a clear L route", () => {
-  // Straight A(2,1)->B(7,5) crosses block C; the L via corner (7,1) is clear.
+  // Straight A(2,1)->B(7,5) crosses chip C; the L via corner (7,1) is clear. A and
+  // B are resistors (passives), so the L's vertical leg may legally run along B's
+  // edge — it is the route's endpoint passive (a trace may hug a passive edge only
+  // at its own endpoints, never a chip edge).
   const placement: Placement = {
     blocks: [
       {
-        type: "chip",
+        type: "resistor",
         name: "A",
-        x: 0,
-        y: 0,
-        width: 2,
-        height: 2,
+        x: 1,
+        y: 0.75,
+        width: 1,
+        height: 0.5,
         rotation: 0,
         pins: [{ pin: "pin1", side: "right", x: 2, y: 1 }],
       },
       {
-        type: "chip",
+        type: "resistor",
         name: "B",
         x: 7,
-        y: 4,
-        width: 2,
-        height: 2,
+        y: 4.75,
+        width: 1,
+        height: 0.5,
         rotation: 0,
         pins: [{ pin: "pin1", side: "left", x: 7, y: 5 }],
       },

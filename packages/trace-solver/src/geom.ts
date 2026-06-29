@@ -70,10 +70,62 @@ export function runsAlongEdge(
   return false
 }
 
+/**
+ * Build a predicate that decides whether an axis-aligned segment may be drawn,
+ * enforcing the routing rules uniformly for the straight/L fast paths and the
+ * maze:
+ *   1. it may not pass through any block's interior,
+ *   2. it may never run along a chip edge,
+ *   3. it may run along a passive edge only if that passive owns one of the
+ *      route's endpoints (passed in `endpointBlocks`).
+ */
+export function makeSegmentPassable(
+  blocks: PlacedBlock[],
+  endpointBlocks: PlacedBlock[],
+): (p1: Point, p2: Point) => boolean {
+  const ep = new Set(endpointBlocks)
+  return (p1, p2) =>
+    !blocks.some((blk) => {
+      if (segmentHitsRect(p1, p2, blk)) return true // crosses interior
+      if (!runsAlongEdge(p1, p2, blk)) return false
+      // chips: never along an edge; passives: only the route's own endpoints.
+      return blk.type === "chip" || !ep.has(blk)
+    })
+}
+
 /** A directed segment between two points. */
 export interface Segment {
   a: Point
   b: Point
+}
+
+/**
+ * A routed segment tagged with its connection's two endpoint coordinate keys, so
+ * overlap checks can tell whether two traces share a connection (a common pin).
+ */
+export interface OwnedSegment extends Segment {
+  ends: readonly string[]
+}
+
+/**
+ * True if axis-aligned segments s1, s2 are collinear (same orientation, same
+ * line) and their extents overlap by more than EPS — i.e. they run on top of
+ * one another. A shared single endpoint (zero-length overlap) does NOT count.
+ */
+export function segmentsOverlap(s1: Segment, s2: Segment): boolean {
+  const v1 = s1.a.x === s1.b.x
+  const v2 = s2.a.x === s2.b.x
+  if (v1 !== v2) return false // not parallel
+  if (v1) {
+    if (s1.a.x !== s2.a.x) return false // different vertical lines
+    const lo = Math.max(Math.min(s1.a.y, s1.b.y), Math.min(s2.a.y, s2.b.y))
+    const hi = Math.min(Math.max(s1.a.y, s1.b.y), Math.max(s2.a.y, s2.b.y))
+    return hi - lo > EPS
+  }
+  if (s1.a.y !== s2.a.y) return false // different horizontal lines
+  const lo = Math.max(Math.min(s1.a.x, s1.b.x), Math.min(s2.a.x, s2.b.x))
+  const hi = Math.min(Math.max(s1.a.x, s1.b.x), Math.max(s2.a.x, s2.b.x))
+  return hi - lo > EPS
 }
 
 /**
