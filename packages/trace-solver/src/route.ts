@@ -4,51 +4,23 @@ import type {
   PlacedBlock,
   PlacedPin,
 } from "@schematic-engine/placement-solver"
+import { type Segment, segmentHitsRect } from "./geom"
+import { mazeRoute } from "./maze"
 import type { Point, RoutedSchematic } from "./types"
-
-/** Margin (schematic units) by which a block is shrunk before testing, so a
- * trace that merely grazes a block edge isn't treated as blocked. */
-const EPS = 0.01
 
 const key = (x: number, y: number) => `${x},${y}`
 
-/** True if the segment p1->p2 passes through the rect's (shrunk) interior. */
-function segmentHitsRect(p1: Point, p2: Point, rect: PlacedBlock): boolean {
-  const xmin = rect.x + EPS
-  const xmax = rect.x + rect.width - EPS
-  const ymin = rect.y + EPS
-  const ymax = rect.y + rect.height - EPS
-  if (xmax <= xmin || ymax <= ymin) return false
-
-  const dx = p2.x - p1.x
-  const dy = p2.y - p1.y
-  let t0 = 0
-  let t1 = 1
-  // Liang–Barsky clipping; returns false when the segment is fully rejected.
-  const clip = (p: number, q: number): boolean => {
-    if (p === 0) return q >= 0
-    const r = q / p
-    if (p < 0) {
-      if (r > t1) return false
-      if (r > t0) t0 = r
-    } else {
-      if (r < t0) return false
-      if (r < t1) t1 = r
-    }
-    return true
-  }
-  if (!clip(-dx, p1.x - xmin)) return false
-  if (!clip(dx, xmax - p1.x)) return false
-  if (!clip(-dy, p1.y - ymin)) return false
-  if (!clip(dy, ymax - p1.y)) return false
-  return t0 < t1
-}
+/** Segments of a polyline trace. */
+const segmentsOf = (pts: Point[]): Segment[] =>
+  pts.slice(1).map((p, i) => ({ a: pts[i], b: p }))
 
 /**
  * Route each placement connection between its two pins:
  *  1. a straight line, if it clears every other block;
  *  2. else an L (move on one axis to align, then the other); first clear wins;
- *  3. else the trace is dropped and both pins get an outward net label, numbered
+ *  3. else a multi-bend Manhattan path around the blocks, picking the route with
+ *     the fewest trace crossings, then fewest turns;
+ *  4. else the trace is dropped and both pins get an outward net label, numbered
  *     1, 2, 3, … (both ends of one broken trace share a number).
  */
 export function solveTraces(placement: Placement): RoutedSchematic {
@@ -59,6 +31,12 @@ export function solveTraces(placement: Placement): RoutedSchematic {
   }
 
   const result: RoutedSchematic = { blocks, traces: [], labels: [] }
+  // Segments of every trace routed so far, so later routes can count crossings.
+  const routedSegments: Segment[] = []
+  const addTrace = (points: Point[]) => {
+    result.traces.push({ points })
+    routedSegments.push(...segmentsOf(points))
+  }
   let broken = 0
 
   for (const c of connections) {
@@ -75,7 +53,7 @@ export function solveTraces(placement: Placement): RoutedSchematic {
     // Straight only when the pins share an axis (traces are Manhattan).
     const axisAligned = a.x === b.x || a.y === b.y
     if (axisAligned && clear(a, b)) {
-      result.traces.push({ points: [a, b] })
+      addTrace([a, b])
       continue
     }
 
@@ -96,7 +74,18 @@ export function solveTraces(placement: Placement): RoutedSchematic {
     ]
     const elbow = corners.find((corner) => clear(a, corner) && clear(corner, b))
     if (elbow) {
-      result.traces.push({ points: [a, elbow, b] })
+      addTrace([a, elbow, b])
+      continue
+    }
+
+    // Escalate: multi-bend route around the blocks (min crossings, then turns).
+    // Endpoint owner passives may be run along; chips and other passives can't.
+    const endpointBlocks = [ea?.block, eb?.block].filter(
+      (x): x is PlacedBlock => x !== undefined,
+    )
+    const path = mazeRoute(a, b, blocks, routedSegments, endpointBlocks)
+    if (path) {
+      addTrace(path)
       continue
     }
 

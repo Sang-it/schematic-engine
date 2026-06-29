@@ -110,6 +110,13 @@ pin2: "net.V1", pin3: "net.V1"
   <capacitor name="CLEFT" connections={{ pin1: "U3.${SIDE_PINS.left[0]}", pin2: "U3.${SIDE_PINS.left[1]}" }} />
   <capacitor name="CRIGHT" connections={{ pin1: "U3.${SIDE_PINS.right[0]}", pin2: "U3.${SIDE_PINS.right[1]}" }} />
   <capacitor name="CBOT" connections={{ pin1: "U3.${SIDE_PINS.bottom[0]}", pin2: "U3.${SIDE_PINS.bottom[1]}" }} />
+
+  <resistor name="RC1" connections={{ pin1: "CRIGHT.pin1" }} />
+  <resistor name="RC2" connections={{ pin1: "CRIGHT.pin2" }} />
+
+  <resistor name="R33" connections={{ pin1: "U3.pin33" }} />
+  <resistor name="R34" connections={{ pin1: "U3.pin34" }} />
+  <resistor name="R35" connections={{ pin1: "U3.pin35" }} />
 `
 
 test("rp2040 microcontroller section places, routes, and renders", () => {
@@ -123,6 +130,10 @@ test("rp2040 microcontroller section places, routes, and renders", () => {
   // A same-side double-connected capacitor on each of the four sides.
   for (const c of ["CTOP", "CLEFT", "CRIGHT", "CBOT"])
     expect(names).toContain(c)
+  // Resistors hung off CRIGHT's two pins (passive-to-passive).
+  for (const r of ["RC1", "RC2"]) expect(names).toContain(r)
+  // One resistor each on chip pins 33/34/35.
+  for (const r of ["R33", "R34", "R35"]) expect(names).toContain(r)
 
   // Pins are balanced across all four sides (within one of each other).
   const u3 = blocks.find((b) => b.name === "U3")!

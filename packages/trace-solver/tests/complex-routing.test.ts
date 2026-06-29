@@ -55,7 +55,7 @@ const PLACEMENT: Placement = {
       rotation: 0,
       pins: [{ pin: "pin1", side: "left", x: 10, y: 2 }],
     },
-    // Broken pair #1: vertical connection walled off (same x -> no L).
+    // Broken pair #1: source pin buried inside an overlapping wall (no escape).
     {
       type: "chip",
       name: "Ba",
@@ -80,7 +80,7 @@ const PLACEMENT: Placement = {
       type: "chip",
       name: "WALL1",
       x: 1.5,
-      y: 11,
+      y: 9,
       width: 1,
       height: 2,
       rotation: 0,
@@ -111,7 +111,7 @@ const PLACEMENT: Placement = {
       type: "chip",
       name: "WALL2",
       x: 7.5,
-      y: 11,
+      y: 9,
       width: 1,
       height: 2,
       rotation: 0,
