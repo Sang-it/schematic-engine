@@ -1,10 +1,5 @@
 import type { PlacedBlock } from "@schematic-engine/placement-solver"
-import {
-  type Segment,
-  runsAlongEdge,
-  segmentHitsRect,
-  segmentsCross,
-} from "./geom"
+import { type Segment, runsAlongEdge, segmentHitsRect } from "./geom"
 import type { Point } from "./types"
 
 /** Crossings dominate turns in the lexical cost (BIG >> any turn count). */
@@ -113,10 +108,39 @@ export function mazeRoute(
       if (!runsAlongEdge(p1, p2, blk)) return false
       return blk.type === "chip" || !endpointSet.has(blk)
     })
+  // Crossings of one grid sub-edge (p1->p2) with the already-routed segments.
+  // The path is split at every grid line, so a routed trace usually crosses
+  // exactly AT a shared vertex of two consecutive sub-edges. A strict-interior
+  // test (segmentsCross) would miss those, undercounting crossings and letting
+  // the search pick a path that visually crosses traces. So the edge's own span
+  // is HALF-OPEN [lo, hi): the crossing at a shared vertex is owned by exactly
+  // one of the two sub-edges (counted once, never zero). The routed trace must
+  // still cross the perpendicular axis STRICTLY, so a trace merely ending on the
+  // path (a T-touch) is not a crossing.
   const crossings = (p1: Point, p2: Point) => {
+    const edgeVert = p1.x === p2.x
     let n = 0
-    const seg = { a: p1, b: p2 }
-    for (const r of routed) if (segmentsCross(seg, r)) n++
+    for (const r of routed) {
+      const rVert = r.a.x === r.b.x
+      if (edgeVert === rVert) continue // parallel: no proper crossing
+      if (edgeVert) {
+        const x = p1.x
+        const ylo = Math.min(p1.y, p2.y)
+        const yhi = Math.max(p1.y, p2.y)
+        const y = r.a.y
+        const rxlo = Math.min(r.a.x, r.b.x)
+        const rxhi = Math.max(r.a.x, r.b.x)
+        if (x > rxlo && x < rxhi && y >= ylo && y < yhi) n++
+      } else {
+        const y = p1.y
+        const xlo = Math.min(p1.x, p2.x)
+        const xhi = Math.max(p1.x, p2.x)
+        const x = r.a.x
+        const rylo = Math.min(r.a.y, r.b.y)
+        const ryhi = Math.max(r.a.y, r.b.y)
+        if (y > rylo && y < ryhi && x >= xlo && x < xhi) n++
+      }
+    }
     return n
   }
 
