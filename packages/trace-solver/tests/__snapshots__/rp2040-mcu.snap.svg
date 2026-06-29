@@ -1,237 +1,237 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="301.229" height="422.133" viewBox="0 0 301.229 422.133">
-  <polyline points="33.4,247.4 33.4,242.4 78.4,242.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="33.4,267.4 33.4,272.4 78.4,272.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="92.114,23.4 87.114,23.4 87.114,68.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="112.114,23.4 117.114,23.4 117.114,68.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="33.4,84.067 33.4,79.067 78.4,79.067" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="33.4,104.067 33.4,109.067 78.4,109.067" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="267.829,98.4 267.829,93.4 222.829,93.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="267.829,118.4 267.829,123.4 222.829,123.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="89.114,358.733 84.114,358.733 84.114,313.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="109.114,358.733 114.114,358.733 114.114,313.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="38.4,222.4 78.4,222.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="38.4,202.4 78.4,202.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="134.114,353.733 134.114,313.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="114.114,383.733 114.114,313.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="262.829,143.4 222.829,143.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="262.829,163.4 222.829,163.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="262.829,183.4 222.829,183.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="267.829,58.4 267.829,98.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="267.829,208.4 252.829,208.4 252.829,118.4 267.829,118.4" fill="none" stroke="black" stroke-width="1" />
-  <rect x="78.4" y="68.4" width="144.429" height="245.333" fill="#f5e6a8" stroke="black" stroke-width="1" />
-  <circle cx="87.114" cy="68.4" r="1.5" fill="black" />
-  <text x="87.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="117.114" cy="68.4" r="1.5" fill="black" />
-  <text x="117.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <circle cx="137.114" cy="68.4" r="1.5" fill="black" />
-  <text x="137.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">3</text>
-  <circle cx="144.114" cy="68.4" r="1.5" fill="black" />
-  <text x="144.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">4</text>
-  <circle cx="151.114" cy="68.4" r="1.5" fill="black" />
-  <text x="151.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">5</text>
-  <circle cx="158.114" cy="68.4" r="1.5" fill="black" />
-  <text x="158.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">6</text>
-  <circle cx="165.114" cy="68.4" r="1.5" fill="black" />
-  <text x="165.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">7</text>
-  <circle cx="172.114" cy="68.4" r="1.5" fill="black" />
-  <text x="172.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">8</text>
-  <circle cx="179.114" cy="68.4" r="1.5" fill="black" />
-  <text x="179.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">9</text>
-  <circle cx="186.114" cy="68.4" r="1.5" fill="black" />
-  <text x="186.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">10</text>
-  <circle cx="193.114" cy="68.4" r="1.5" fill="black" />
-  <text x="193.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">11</text>
-  <circle cx="200.114" cy="68.4" r="1.5" fill="black" />
-  <text x="200.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">12</text>
-  <circle cx="207.114" cy="68.4" r="1.5" fill="black" />
-  <text x="207.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">13</text>
-  <circle cx="214.114" cy="68.4" r="1.5" fill="black" />
-  <text x="214.114" y="71.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">14</text>
-  <circle cx="78.4" cy="79.067" r="1.5" fill="black" />
-  <text x="81.4" y="79.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">15</text>
-  <circle cx="78.4" cy="109.067" r="1.5" fill="black" />
-  <text x="81.4" y="109.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">16</text>
-  <circle cx="78.4" cy="129.067" r="1.5" fill="black" />
-  <text x="81.4" y="129.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">17</text>
-  <circle cx="78.4" cy="139.733" r="1.5" fill="black" />
-  <text x="81.4" y="139.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">18</text>
-  <circle cx="78.4" cy="150.4" r="1.5" fill="black" />
-  <text x="81.4" y="150.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">19</text>
-  <circle cx="78.4" cy="161.067" r="1.5" fill="black" />
-  <text x="81.4" y="161.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">20</text>
-  <circle cx="78.4" cy="171.733" r="1.5" fill="black" />
-  <text x="81.4" y="171.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">21</text>
-  <circle cx="78.4" cy="182.4" r="1.5" fill="black" />
-  <text x="81.4" y="182.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">24</text>
-  <circle cx="78.4" cy="202.4" r="1.5" fill="black" />
-  <text x="81.4" y="202.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">25</text>
-  <circle cx="78.4" cy="222.4" r="1.5" fill="black" />
-  <text x="81.4" y="222.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">26</text>
-  <circle cx="78.4" cy="242.4" r="1.5" fill="black" />
-  <text x="81.4" y="242.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">27</text>
-  <circle cx="78.4" cy="272.4" r="1.5" fill="black" />
-  <text x="81.4" y="272.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">28</text>
-  <circle cx="78.4" cy="292.4" r="1.5" fill="black" />
-  <text x="81.4" y="292.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">29</text>
-  <circle cx="78.4" cy="303.067" r="1.5" fill="black" />
-  <text x="81.4" y="303.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">30</text>
-  <circle cx="222.829" cy="93.4" r="1.5" fill="black" />
-  <text x="219.829" y="93.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">31</text>
-  <circle cx="222.829" cy="123.4" r="1.5" fill="black" />
-  <text x="219.829" y="123.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">32</text>
-  <circle cx="222.829" cy="143.4" r="1.5" fill="black" />
-  <text x="219.829" y="143.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">33</text>
-  <circle cx="222.829" cy="163.4" r="1.5" fill="black" />
-  <text x="219.829" y="163.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">34</text>
-  <circle cx="222.829" cy="183.4" r="1.5" fill="black" />
-  <text x="219.829" y="183.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">35</text>
-  <circle cx="222.829" cy="203.4" r="1.5" fill="black" />
-  <text x="219.829" y="203.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">36</text>
-  <circle cx="222.829" cy="214.067" r="1.5" fill="black" />
-  <text x="219.829" y="214.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">37</text>
-  <circle cx="222.829" cy="224.733" r="1.5" fill="black" />
-  <text x="219.829" y="224.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">38</text>
-  <circle cx="222.829" cy="235.4" r="1.5" fill="black" />
-  <text x="219.829" y="235.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">39</text>
-  <circle cx="222.829" cy="246.067" r="1.5" fill="black" />
-  <text x="219.829" y="246.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">40</text>
-  <circle cx="222.829" cy="256.733" r="1.5" fill="black" />
-  <text x="219.829" y="256.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">41</text>
-  <circle cx="222.829" cy="267.4" r="1.5" fill="black" />
-  <text x="219.829" y="267.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">42</text>
-  <circle cx="222.829" cy="278.067" r="1.5" fill="black" />
-  <text x="219.829" y="278.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">43</text>
-  <circle cx="222.829" cy="288.733" r="1.5" fill="black" />
-  <text x="219.829" y="288.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">44</text>
-  <circle cx="84.114" cy="313.733" r="1.5" fill="black" />
-  <text x="84.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">45</text>
-  <circle cx="114.114" cy="313.733" r="1.5" fill="black" />
-  <text x="114.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">46</text>
-  <circle cx="134.114" cy="313.733" r="1.5" fill="black" />
-  <text x="134.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">47</text>
-  <circle cx="154.114" cy="313.733" r="1.5" fill="black" />
-  <text x="154.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">48</text>
-  <circle cx="161.114" cy="313.733" r="1.5" fill="black" />
-  <text x="161.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">49</text>
-  <circle cx="168.114" cy="313.733" r="1.5" fill="black" />
-  <text x="168.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">50</text>
-  <circle cx="175.114" cy="313.733" r="1.5" fill="black" />
-  <text x="175.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">51</text>
-  <circle cx="182.114" cy="313.733" r="1.5" fill="black" />
-  <text x="182.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">52</text>
-  <circle cx="189.114" cy="313.733" r="1.5" fill="black" />
-  <text x="189.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">53</text>
-  <circle cx="196.114" cy="313.733" r="1.5" fill="black" />
-  <text x="196.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">54</text>
-  <circle cx="203.114" cy="313.733" r="1.5" fill="black" />
-  <text x="203.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">55</text>
-  <circle cx="210.114" cy="313.733" r="1.5" fill="black" />
-  <text x="210.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">56</text>
-  <circle cx="217.114" cy="313.733" r="1.5" fill="black" />
-  <text x="217.114" y="310.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">57</text>
-  <text x="150.614" y="191.067" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">U3</text>
-  <rect x="28.4" y="247.4" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="33.4" cy="247.4" r="1.5" fill="black" />
-  <text x="33.4" y="250.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="33.4" cy="267.4" r="1.5" fill="black" />
-  <text x="33.4" y="264.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="33.4" y="257.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R8</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="301.229" height="437.133" viewBox="0 0 301.229 437.133">
+  <polyline points="28.4,252.4 28.4,247.4 78.4,247.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="28.4,272.4 28.4,277.4 78.4,277.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="92.114,23.4 87.114,23.4 87.114,73.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="112.114,23.4 117.114,23.4 117.114,73.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="28.4,89.067 28.4,84.067 78.4,84.067" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="28.4,109.067 28.4,114.067 78.4,114.067" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="272.829,103.4 272.829,98.4 222.829,98.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="272.829,123.4 272.829,128.4 222.829,128.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="89.114,368.733 84.114,368.733 84.114,318.733" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="109.114,368.733 114.114,368.733 114.114,318.733" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="38.4,227.4 78.4,227.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="38.4,207.4 78.4,207.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="134.114,358.733 134.114,318.733" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="114.114,398.733 114.114,318.733" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="262.829,148.4 222.829,148.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="262.829,168.4 222.829,168.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="262.829,188.4 222.829,188.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="272.829,63.4 272.829,103.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="272.829,213.4 257.829,213.4 257.829,123.4 272.829,123.4" fill="none" stroke="black" stroke-width="1" />
+  <rect x="78.4" y="73.4" width="144.429" height="245.333" fill="#f5e6a8" stroke="black" stroke-width="1" />
+  <circle cx="87.114" cy="73.4" r="1.5" fill="black" />
+  <text x="87.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="117.114" cy="73.4" r="1.5" fill="black" />
+  <text x="117.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <circle cx="137.114" cy="73.4" r="1.5" fill="black" />
+  <text x="137.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">3</text>
+  <circle cx="144.114" cy="73.4" r="1.5" fill="black" />
+  <text x="144.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">4</text>
+  <circle cx="151.114" cy="73.4" r="1.5" fill="black" />
+  <text x="151.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">5</text>
+  <circle cx="158.114" cy="73.4" r="1.5" fill="black" />
+  <text x="158.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">6</text>
+  <circle cx="165.114" cy="73.4" r="1.5" fill="black" />
+  <text x="165.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">7</text>
+  <circle cx="172.114" cy="73.4" r="1.5" fill="black" />
+  <text x="172.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">8</text>
+  <circle cx="179.114" cy="73.4" r="1.5" fill="black" />
+  <text x="179.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">9</text>
+  <circle cx="186.114" cy="73.4" r="1.5" fill="black" />
+  <text x="186.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">10</text>
+  <circle cx="193.114" cy="73.4" r="1.5" fill="black" />
+  <text x="193.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">11</text>
+  <circle cx="200.114" cy="73.4" r="1.5" fill="black" />
+  <text x="200.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">12</text>
+  <circle cx="207.114" cy="73.4" r="1.5" fill="black" />
+  <text x="207.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">13</text>
+  <circle cx="214.114" cy="73.4" r="1.5" fill="black" />
+  <text x="214.114" y="76.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">14</text>
+  <circle cx="78.4" cy="84.067" r="1.5" fill="black" />
+  <text x="81.4" y="84.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">15</text>
+  <circle cx="78.4" cy="114.067" r="1.5" fill="black" />
+  <text x="81.4" y="114.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">16</text>
+  <circle cx="78.4" cy="134.067" r="1.5" fill="black" />
+  <text x="81.4" y="134.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">17</text>
+  <circle cx="78.4" cy="144.733" r="1.5" fill="black" />
+  <text x="81.4" y="144.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">18</text>
+  <circle cx="78.4" cy="155.4" r="1.5" fill="black" />
+  <text x="81.4" y="155.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">19</text>
+  <circle cx="78.4" cy="166.067" r="1.5" fill="black" />
+  <text x="81.4" y="166.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">20</text>
+  <circle cx="78.4" cy="176.733" r="1.5" fill="black" />
+  <text x="81.4" y="176.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">21</text>
+  <circle cx="78.4" cy="187.4" r="1.5" fill="black" />
+  <text x="81.4" y="187.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">24</text>
+  <circle cx="78.4" cy="207.4" r="1.5" fill="black" />
+  <text x="81.4" y="207.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">25</text>
+  <circle cx="78.4" cy="227.4" r="1.5" fill="black" />
+  <text x="81.4" y="227.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">26</text>
+  <circle cx="78.4" cy="247.4" r="1.5" fill="black" />
+  <text x="81.4" y="247.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">27</text>
+  <circle cx="78.4" cy="277.4" r="1.5" fill="black" />
+  <text x="81.4" y="277.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">28</text>
+  <circle cx="78.4" cy="297.4" r="1.5" fill="black" />
+  <text x="81.4" y="297.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">29</text>
+  <circle cx="78.4" cy="308.067" r="1.5" fill="black" />
+  <text x="81.4" y="308.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">30</text>
+  <circle cx="222.829" cy="98.4" r="1.5" fill="black" />
+  <text x="219.829" y="98.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">31</text>
+  <circle cx="222.829" cy="128.4" r="1.5" fill="black" />
+  <text x="219.829" y="128.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">32</text>
+  <circle cx="222.829" cy="148.4" r="1.5" fill="black" />
+  <text x="219.829" y="148.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">33</text>
+  <circle cx="222.829" cy="168.4" r="1.5" fill="black" />
+  <text x="219.829" y="168.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">34</text>
+  <circle cx="222.829" cy="188.4" r="1.5" fill="black" />
+  <text x="219.829" y="188.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">35</text>
+  <circle cx="222.829" cy="208.4" r="1.5" fill="black" />
+  <text x="219.829" y="208.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">36</text>
+  <circle cx="222.829" cy="219.067" r="1.5" fill="black" />
+  <text x="219.829" y="219.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">37</text>
+  <circle cx="222.829" cy="229.733" r="1.5" fill="black" />
+  <text x="219.829" y="229.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">38</text>
+  <circle cx="222.829" cy="240.4" r="1.5" fill="black" />
+  <text x="219.829" y="240.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">39</text>
+  <circle cx="222.829" cy="251.067" r="1.5" fill="black" />
+  <text x="219.829" y="251.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">40</text>
+  <circle cx="222.829" cy="261.733" r="1.5" fill="black" />
+  <text x="219.829" y="261.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">41</text>
+  <circle cx="222.829" cy="272.4" r="1.5" fill="black" />
+  <text x="219.829" y="272.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">42</text>
+  <circle cx="222.829" cy="283.067" r="1.5" fill="black" />
+  <text x="219.829" y="283.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">43</text>
+  <circle cx="222.829" cy="293.733" r="1.5" fill="black" />
+  <text x="219.829" y="293.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">44</text>
+  <circle cx="84.114" cy="318.733" r="1.5" fill="black" />
+  <text x="84.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">45</text>
+  <circle cx="114.114" cy="318.733" r="1.5" fill="black" />
+  <text x="114.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">46</text>
+  <circle cx="134.114" cy="318.733" r="1.5" fill="black" />
+  <text x="134.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">47</text>
+  <circle cx="154.114" cy="318.733" r="1.5" fill="black" />
+  <text x="154.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">48</text>
+  <circle cx="161.114" cy="318.733" r="1.5" fill="black" />
+  <text x="161.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">49</text>
+  <circle cx="168.114" cy="318.733" r="1.5" fill="black" />
+  <text x="168.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">50</text>
+  <circle cx="175.114" cy="318.733" r="1.5" fill="black" />
+  <text x="175.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">51</text>
+  <circle cx="182.114" cy="318.733" r="1.5" fill="black" />
+  <text x="182.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">52</text>
+  <circle cx="189.114" cy="318.733" r="1.5" fill="black" />
+  <text x="189.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">53</text>
+  <circle cx="196.114" cy="318.733" r="1.5" fill="black" />
+  <text x="196.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">54</text>
+  <circle cx="203.114" cy="318.733" r="1.5" fill="black" />
+  <text x="203.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">55</text>
+  <circle cx="210.114" cy="318.733" r="1.5" fill="black" />
+  <text x="210.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">56</text>
+  <circle cx="217.114" cy="318.733" r="1.5" fill="black" />
+  <text x="217.114" y="315.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">57</text>
+  <text x="150.614" y="196.067" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">U3</text>
+  <rect x="23.4" y="252.4" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="28.4" cy="252.4" r="1.5" fill="black" />
+  <text x="28.4" y="255.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="28.4" cy="272.4" r="1.5" fill="black" />
+  <text x="28.4" y="269.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="28.4" y="262.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R8</text>
   <rect x="92.114" y="18.4" width="20" height="10" fill="#b4c8f0" stroke="black" stroke-width="1" />
   <circle cx="92.114" cy="23.4" r="1.5" fill="black" />
   <text x="95.114" y="23.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
   <circle cx="112.114" cy="23.4" r="1.5" fill="black" />
   <text x="109.114" y="23.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
   <text x="102.114" y="23.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">CTOP</text>
-  <rect x="28.4" y="84.067" width="10" height="20" fill="#b4c8f0" stroke="black" stroke-width="1" />
-  <circle cx="33.4" cy="84.067" r="1.5" fill="black" />
-  <text x="33.4" y="87.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="33.4" cy="104.067" r="1.5" fill="black" />
-  <text x="33.4" y="101.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="33.4" y="94.067" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">CLEFT</text>
-  <rect x="262.829" y="98.4" width="10" height="20" fill="#b4c8f0" stroke="black" stroke-width="1" />
-  <circle cx="267.829" cy="98.4" r="1.5" fill="black" />
-  <text x="267.829" y="101.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="267.829" cy="118.4" r="1.5" fill="black" />
-  <text x="267.829" y="115.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="267.829" y="108.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">CRIGHT</text>
-  <rect x="89.114" y="353.733" width="20" height="10" fill="#b4c8f0" stroke="black" stroke-width="1" />
-  <circle cx="89.114" cy="358.733" r="1.5" fill="black" />
-  <text x="92.114" y="358.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="109.114" cy="358.733" r="1.5" fill="black" />
-  <text x="106.114" y="358.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="99.114" y="358.733" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">CBOT</text>
-  <rect x="18.4" y="217.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="38.4" cy="222.4" r="1.5" fill="black" />
-  <text x="35.4" y="222.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <circle cx="18.4" cy="222.4" r="1.5" fill="black" />
-  <text x="21.4" y="222.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <text x="28.4" y="222.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R4</text>
-  <rect x="18.4" y="197.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="38.4" cy="202.4" r="1.5" fill="black" />
-  <text x="35.4" y="202.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <circle cx="18.4" cy="202.4" r="1.5" fill="black" />
-  <text x="21.4" y="202.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <text x="28.4" y="202.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R5</text>
-  <rect x="129.114" y="353.733" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="134.114" cy="353.733" r="1.5" fill="black" />
-  <text x="134.114" y="356.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="134.114" cy="373.733" r="1.5" fill="black" />
-  <text x="134.114" y="370.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="134.114" y="363.733" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R6</text>
-  <rect x="109.114" y="383.733" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="114.114" cy="383.733" r="1.5" fill="black" />
-  <text x="114.114" y="386.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="114.114" cy="403.733" r="1.5" fill="black" />
-  <text x="114.114" y="400.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="114.114" y="393.733" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R7</text>
-  <rect x="262.829" y="138.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="262.829" cy="143.4" r="1.5" fill="black" />
-  <text x="265.829" y="143.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="282.829" cy="143.4" r="1.5" fill="black" />
-  <text x="279.829" y="143.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="272.829" y="143.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R33</text>
-  <rect x="262.829" y="158.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="262.829" cy="163.4" r="1.5" fill="black" />
-  <text x="265.829" y="163.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="282.829" cy="163.4" r="1.5" fill="black" />
-  <text x="279.829" y="163.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="272.829" y="163.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R34</text>
-  <rect x="262.829" y="178.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="262.829" cy="183.4" r="1.5" fill="black" />
-  <text x="265.829" y="183.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="282.829" cy="183.4" r="1.5" fill="black" />
-  <text x="279.829" y="183.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="272.829" y="183.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R35</text>
-  <rect x="262.829" y="38.4" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="267.829" cy="58.4" r="1.5" fill="black" />
-  <text x="267.829" y="55.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="267.829" cy="38.4" r="1.5" fill="black" />
-  <text x="267.829" y="41.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="267.829" y="48.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">RC1</text>
-  <rect x="262.829" y="208.4" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
-  <circle cx="267.829" cy="208.4" r="1.5" fill="black" />
-  <text x="267.829" y="211.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
-  <circle cx="267.829" cy="228.4" r="1.5" fill="black" />
-  <text x="267.829" y="225.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
-  <text x="267.829" y="218.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">RC2</text>
-  <rect x="134.114" y="56.2" width="6" height="6.2" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="137.114" y="59.3" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 137.114 59.3)">V1</text>
-  <rect x="64.1" y="147.4" width="8.3" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="68.25" y="150.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">GND</text>
-  <rect x="228.829" y="264.4" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="234.029" y="267.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
-  <rect x="228.829" y="275.067" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="234.029" y="278.067" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
-  <rect x="228.829" y="285.733" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="234.029" y="288.733" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
-  <rect x="151.114" y="319.733" width="6" height="10.4" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="154.114" y="324.933" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 154.114 324.933)">V3_3</text>
-  <rect x="165.114" y="319.733" width="6" height="6.2" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="168.114" y="322.833" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 168.114 322.833)">V1</text>
-  <rect x="214.114" y="319.733" width="6" height="8.3" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="217.114" y="323.883" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 217.114 323.883)">GND</text>
-  <rect x="2" y="219.4" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="7.2" y="222.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
-  <rect x="2" y="199.4" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
-  <text x="7.2" y="202.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
+  <rect x="23.4" y="89.067" width="10" height="20" fill="#b4c8f0" stroke="black" stroke-width="1" />
+  <circle cx="28.4" cy="89.067" r="1.5" fill="black" />
+  <text x="28.4" y="92.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="28.4" cy="109.067" r="1.5" fill="black" />
+  <text x="28.4" y="106.067" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="28.4" y="99.067" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">CLEFT</text>
+  <rect x="267.829" y="103.4" width="10" height="20" fill="#b4c8f0" stroke="black" stroke-width="1" />
+  <circle cx="272.829" cy="103.4" r="1.5" fill="black" />
+  <text x="272.829" y="106.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="272.829" cy="123.4" r="1.5" fill="black" />
+  <text x="272.829" y="120.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="272.829" y="113.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">CRIGHT</text>
+  <rect x="89.114" y="363.733" width="20" height="10" fill="#b4c8f0" stroke="black" stroke-width="1" />
+  <circle cx="89.114" cy="368.733" r="1.5" fill="black" />
+  <text x="92.114" y="368.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="109.114" cy="368.733" r="1.5" fill="black" />
+  <text x="106.114" y="368.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="99.114" y="368.733" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">CBOT</text>
+  <rect x="18.4" y="222.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="38.4" cy="227.4" r="1.5" fill="black" />
+  <text x="35.4" y="227.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <circle cx="18.4" cy="227.4" r="1.5" fill="black" />
+  <text x="21.4" y="227.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <text x="28.4" y="227.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R4</text>
+  <rect x="18.4" y="202.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="38.4" cy="207.4" r="1.5" fill="black" />
+  <text x="35.4" y="207.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <circle cx="18.4" cy="207.4" r="1.5" fill="black" />
+  <text x="21.4" y="207.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <text x="28.4" y="207.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R5</text>
+  <rect x="129.114" y="358.733" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="134.114" cy="358.733" r="1.5" fill="black" />
+  <text x="134.114" y="361.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="134.114" cy="378.733" r="1.5" fill="black" />
+  <text x="134.114" y="375.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="134.114" y="368.733" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R6</text>
+  <rect x="109.114" y="398.733" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="114.114" cy="398.733" r="1.5" fill="black" />
+  <text x="114.114" y="401.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="114.114" cy="418.733" r="1.5" fill="black" />
+  <text x="114.114" y="415.733" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="114.114" y="408.733" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R7</text>
+  <rect x="262.829" y="143.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="262.829" cy="148.4" r="1.5" fill="black" />
+  <text x="265.829" y="148.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="282.829" cy="148.4" r="1.5" fill="black" />
+  <text x="279.829" y="148.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="272.829" y="148.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R33</text>
+  <rect x="262.829" y="163.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="262.829" cy="168.4" r="1.5" fill="black" />
+  <text x="265.829" y="168.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="282.829" cy="168.4" r="1.5" fill="black" />
+  <text x="279.829" y="168.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="272.829" y="168.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R34</text>
+  <rect x="262.829" y="183.4" width="20" height="10" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="262.829" cy="188.4" r="1.5" fill="black" />
+  <text x="265.829" y="188.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="282.829" cy="188.4" r="1.5" fill="black" />
+  <text x="279.829" y="188.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="272.829" y="188.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">R35</text>
+  <rect x="267.829" y="43.4" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="272.829" cy="63.4" r="1.5" fill="black" />
+  <text x="272.829" y="60.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="272.829" cy="43.4" r="1.5" fill="black" />
+  <text x="272.829" y="46.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="272.829" y="53.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">RC1</text>
+  <rect x="267.829" y="213.4" width="10" height="20" fill="#f0b4b4" stroke="black" stroke-width="1" />
+  <circle cx="272.829" cy="213.4" r="1.5" fill="black" />
+  <text x="272.829" y="216.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">1</text>
+  <circle cx="272.829" cy="233.4" r="1.5" fill="black" />
+  <text x="272.829" y="230.4" font-family="sans-serif" font-size="2.5" text-anchor="middle" dominant-baseline="middle">2</text>
+  <text x="272.829" y="223.4" font-family="sans-serif" font-size="3" text-anchor="middle" dominant-baseline="middle">RC2</text>
+  <rect x="134.114" y="61.2" width="6" height="6.2" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="137.114" y="64.3" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 137.114 64.3)">V1</text>
+  <rect x="64.1" y="152.4" width="8.3" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="68.25" y="155.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">GND</text>
+  <rect x="228.829" y="269.4" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="234.029" y="272.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
+  <rect x="228.829" y="280.067" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="234.029" y="283.067" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
+  <rect x="228.829" y="290.733" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="234.029" y="293.733" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
+  <rect x="151.114" y="324.733" width="6" height="10.4" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="154.114" y="329.933" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 154.114 329.933)">V3_3</text>
+  <rect x="165.114" y="324.733" width="6" height="6.2" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="168.114" y="327.833" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 168.114 327.833)">V1</text>
+  <rect x="214.114" y="324.733" width="6" height="8.3" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="217.114" y="328.883" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 217.114 328.883)">GND</text>
+  <rect x="2" y="224.4" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="7.2" y="227.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
+  <rect x="2" y="204.4" width="10.4" height="6" rx="1" fill="white" stroke="black" stroke-width="0.5" />
+  <text x="7.2" y="207.4" font-family="sans-serif" font-size="3" font-weight="bold" text-anchor="middle" dominant-baseline="middle">V3_3</text>
 </svg>

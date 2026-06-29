@@ -261,6 +261,10 @@ function singlePassiveGeometry(
  * anchor edge (vertical for a left/right pin, horizontal for a top/bottom pin)
  * so it can sit alongside the chip; the anchor pin is aligned to its chip pin
  * and the other pin is wired across to its chip pin.
+ *
+ * It is pushed out an extra (pw - ph) / 2 so its pin line (its centreline, since
+ * the symbol runs parallel) sits at the same depth as a single-connection
+ * passive's MIDPOINT — both then share one alignment column off the chip pin.
  */
 function doublePassiveGeometry(
   side: PinSide,
@@ -278,11 +282,16 @@ function doublePassiveGeometry(
   axis: "x" | "y"
   dir: 1 | -1
 } {
+  // Extra outward push so the centreline aligns with single-passive midpoints.
+  const extra = (pw - ph) / 2
   if (side === "left" || side === "right") {
     // Vertical symbol: pin1 on top, pin2 on bottom.
     const width = ph
     const height = pw
-    const x = side === "right" ? cp.x + PASSIVE_GAP : cp.x - PASSIVE_GAP - width
+    const x =
+      side === "right"
+        ? cp.x + PASSIVE_GAP + extra
+        : cp.x - PASSIVE_GAP - extra - width
     const y = anchorPin === "pin1" ? cp.y : cp.y - height
     return {
       x,
@@ -301,7 +310,10 @@ function doublePassiveGeometry(
   // Horizontal symbol on a top/bottom edge: pin1 left, pin2 right.
   const width = pw
   const height = ph
-  const y = side === "top" ? cp.y - PASSIVE_GAP - height : cp.y + PASSIVE_GAP
+  const y =
+    side === "top"
+      ? cp.y - PASSIVE_GAP - extra - height
+      : cp.y + PASSIVE_GAP + extra
   const x = anchorPin === "pin1" ? cp.x : cp.x - width
   return {
     x,
@@ -340,13 +352,17 @@ function doubleCenteredGeometry(
   axis: "x" | "y"
   dir: 1 | -1
 } {
+  // Extra outward push so the centreline aligns with single-passive midpoints.
+  const extra = (pw - ph) / 2
   if (side === "left" || side === "right") {
     // Vertical, centred on the midpoint of the two pin y's.
     const width = ph
     const height = pw
     const edgeX = a.placedPin.x
     const x =
-      side === "right" ? edgeX + PASSIVE_GAP : edgeX - PASSIVE_GAP - width
+      side === "right"
+        ? edgeX + PASSIVE_GAP + extra
+        : edgeX - PASSIVE_GAP - extra - width
     const midY = (a.placedPin.y + b.placedPin.y) / 2
     const top = a.placedPin.y <= b.placedPin.y ? a : b
     const bottom = top === a ? b : a
@@ -368,7 +384,10 @@ function doubleCenteredGeometry(
   const width = pw
   const height = ph
   const edgeY = a.placedPin.y
-  const y = side === "top" ? edgeY - PASSIVE_GAP - height : edgeY + PASSIVE_GAP
+  const y =
+    side === "top"
+      ? edgeY - PASSIVE_GAP - extra - height
+      : edgeY + PASSIVE_GAP + extra
   const midX = (a.placedPin.x + b.placedPin.x) / 2
   const left = a.placedPin.x <= b.placedPin.x ? a : b
   const right = left === a ? b : a
