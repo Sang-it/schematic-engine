@@ -25,6 +25,10 @@ const COLLISION_STEP = 0.5
 const GAP_MAJOR = 1
 /** Required clear gap along the axis perpendicular to the shift. */
 const GAP_MINOR = 0.5
+/** Min gap between adjacent pins that only carry a net label / nothing. The
+ * outward net-label box is ~0.3 units wide along the edge, so this packs them
+ * almost touching. */
+const LABEL_PIN_GAP = 0.35
 
 interface TaggedPassive {
   type: "resistor" | "capacitor"
@@ -439,19 +443,29 @@ function placeChipSchematic(
   placed: Set<string>
 } {
   // Same-side double passives force their two chip pins adjacent + spaced to
-  // fit, possibly growing the chip box. The regular spacing is floored so two
-  // single passives on adjacent pins always fit (box grows when pins are dense).
+  // fit. The passive gap is only required between pins that actually carry a
+  // passive; net-only / empty / broken pins just need room for two net labels,
+  // so they pack tighter. The chip box grows from the summed spacing.
   const sidePairs = sameSidePairs(anchor, passives)
+  const passivePins = new Set<string>()
+  for (const { comp } of passives) {
+    for (const e of pinEndpoints(comp)) {
+      if (e.targetComp === anchor.name) passivePins.add(e.targetPin)
+    }
+  }
   const maxPassiveExtent = passives.reduce(
     (m, p) => Math.max(m, p.comp.schematicSize.defaultSchematicHeight),
     0,
   )
-  const minPinGap = maxPassiveExtent > 0 ? maxPassiveExtent + GAP_MINOR : 0
   const { pins: laidOutPins, size: chipSize } = layoutChipPins(
     anchor.pinPositions,
     anchor.schematicSize,
     sidePairs,
-    minPinGap,
+    {
+      passivePins,
+      passiveGap: maxPassiveExtent > 0 ? maxPassiveExtent + GAP_MINOR : 0,
+      labelGap: LABEL_PIN_GAP,
+    },
   )
   const chipPins = laidOutPins.map((p) => ({
     ...p,

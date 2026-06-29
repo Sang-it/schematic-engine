@@ -36,9 +36,35 @@ function pinNumber(id: string): string {
   return m ? m[1] : id
 }
 
+const labelWidth = (text: string) =>
+  Math.max(LABEL_BOX, text.length * LABEL_FONT_SIZE * 0.7 + 2)
+
 /** Render a routed schematic (blocks, traces, net labels) to a stable SVG. */
 export function renderRoutedSvg(routed: RoutedSchematic): string {
   const { blocks, traces, labels } = routed
+
+  // Pins already directly connected (trace endpoint / broken label) show only
+  // that connection, so they get no net label.
+  const direct = new Set<string>()
+  for (const t of traces) {
+    const ends = [t.points[0], t.points[t.points.length - 1]]
+    for (const p of ends) direct.add(`${p.x},${p.y}`)
+  }
+  for (const l of labels) direct.add(`${l.x},${l.y}`)
+
+  // All boxed labels (unit coords): net names on net-only pins + broken numbers.
+  const labelEntries: { x: number; y: number; side: PinSide; text: string }[] =
+    []
+  for (const b of blocks) {
+    for (const p of b.pins) {
+      if (p.net !== undefined && !direct.has(`${p.x},${p.y}`)) {
+        labelEntries.push({ x: p.x, y: p.y, side: p.side, text: p.net })
+      }
+    }
+  }
+  for (const l of labels) {
+    labelEntries.push({ x: l.x, y: l.y, side: l.side, text: l.label })
+  }
 
   const xs: number[] = []
   const ys: number[] = []
@@ -56,19 +82,26 @@ export function renderRoutedSvg(routed: RoutedSchematic): string {
       ys.push(p.y)
     }
   }
-  for (const l of labels) {
-    xs.push(l.x)
-    ys.push(l.y)
+  for (const e of labelEntries) {
+    xs.push(e.x)
+    ys.push(e.y)
   }
   const minX = xs.length ? Math.min(...xs) : 0
   const minY = ys.length ? Math.min(...ys) : 0
   const maxX = xs.length ? Math.max(...xs) : 0
   const maxY = ys.length ? Math.max(...ys) : 0
 
-  const X = (u: number) => PAD + (u - minX) * SCALE
-  const Y = (u: number) => PAD + (u - minY) * SCALE
-  const width = (maxX - minX) * SCALE + PAD * 2
-  const height = (maxY - minY) * SCALE + PAD * 2
+  // Pad enough that the longest label (reaching outward) stays in view.
+  const maxLabel = labelEntries.reduce(
+    (m, e) => Math.max(m, labelWidth(e.text)),
+    0,
+  )
+  const pad = Math.max(PAD, LABEL_OUT + maxLabel + 2)
+
+  const X = (u: number) => pad + (u - minX) * SCALE
+  const Y = (u: number) => pad + (u - minY) * SCALE
+  const width = (maxX - minX) * SCALE + pad * 2
+  const height = (maxY - minY) * SCALE + pad * 2
 
   // Traces first so they sit under the symbols. Solid black polylines.
   const wires = traces.map((t) => {
@@ -109,50 +142,36 @@ export function renderRoutedSvg(routed: RoutedSchematic): string {
     ].join("\n")
   })
 
-  // A bordered box (just outside a pin, along its side) holding label text, so
-  // it reads clearly as a label. Used for net names and broken-trace numbers.
+  // A bordered box just outside a pin holding label text, so it reads as a
+  // label. Left/right pins get a horizontal box; top/bottom pins get a vertical
+  // (rotated) box, so the along-edge width is always constant.
   const boxedLabel = (
     px: number,
     py: number,
     side: PinSide,
     text: string,
   ): string[] => {
-    let lx = px
-    let ly = py
-    if (side === "left") lx -= LABEL_OUT
-    else if (side === "right") lx += LABEL_OUT
-    else if (side === "top") ly -= LABEL_OUT
-    else ly += LABEL_OUT
-    const bw = Math.max(LABEL_BOX, text.length * LABEL_FONT_SIZE * 0.7 + 2)
+    const bw = labelWidth(text)
+    if (side === "left" || side === "right") {
+      const lx =
+        side === "left" ? px - LABEL_OUT - bw / 2 : px + LABEL_OUT + bw / 2
+      return [
+        `  <rect x="${fmt(lx - bw / 2)}" y="${fmt(py - LABEL_BOX / 2)}" width="${fmt(bw)}" height="${fmt(LABEL_BOX)}" rx="1" fill="white" stroke="black" stroke-width="0.5" />`,
+        `  <text x="${fmt(lx)}" y="${fmt(py)}" font-family="sans-serif" font-size="${LABEL_FONT_SIZE}" font-weight="bold" text-anchor="middle" dominant-baseline="middle">${text}</text>`,
+      ]
+    }
+    // Vertical: long axis runs outward, short (constant) axis along the edge.
+    const ly =
+      side === "top" ? py - LABEL_OUT - bw / 2 : py + LABEL_OUT + bw / 2
     return [
-      `  <rect x="${fmt(lx - bw / 2)}" y="${fmt(ly - LABEL_BOX / 2)}" width="${fmt(bw)}" height="${fmt(LABEL_BOX)}" rx="1" fill="white" stroke="black" stroke-width="0.5" />`,
-      `  <text x="${fmt(lx)}" y="${fmt(ly)}" font-family="sans-serif" font-size="${LABEL_FONT_SIZE}" font-weight="bold" text-anchor="middle" dominant-baseline="middle">${text}</text>`,
+      `  <rect x="${fmt(px - LABEL_BOX / 2)}" y="${fmt(ly - bw / 2)}" width="${fmt(LABEL_BOX)}" height="${fmt(bw)}" rx="1" fill="white" stroke="black" stroke-width="0.5" />`,
+      `  <text x="${fmt(px)}" y="${fmt(ly)}" font-family="sans-serif" font-size="${LABEL_FONT_SIZE}" font-weight="bold" text-anchor="middle" dominant-baseline="middle" transform="rotate(-90 ${fmt(px)} ${fmt(ly)})">${text}</text>`,
     ]
   }
 
-  // Pins that already have a direct connection (a routed trace endpoint or a
-  // broken-trace label). A pin with both a direct and a net connection shows
-  // only the direct one, so it gets no net label.
-  const direct = new Set<string>()
-  for (const t of traces) {
-    const ends = [t.points[0], t.points[t.points.length - 1]]
-    for (const p of ends) direct.add(`${p.x},${p.y}`)
-  }
-  for (const l of labels) direct.add(`${l.x},${l.y}`)
-
-  // Net labels on every net-connected pin without a direct connection (a pin
-  // can repeat a net, producing multiple labels).
-  const netNameLabels = blocks.flatMap((b) =>
-    b.pins
-      .filter((p) => p.net !== undefined && !direct.has(`${p.x},${p.y}`))
-      .flatMap((p) => boxedLabel(X(p.x), Y(p.y), p.side, p.net as string)),
+  const netLabels = labelEntries.flatMap((e) =>
+    boxedLabel(X(e.x), Y(e.y), e.side, e.text),
   )
-
-  // Broken-trace labels (numbered).
-  const brokenLabels = labels.flatMap((l) =>
-    boxedLabel(X(l.x), Y(l.y), l.side, l.label),
-  )
-  const netLabels = [...netNameLabels, ...brokenLabels]
 
   return [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${fmt(width)}" height="${fmt(height)}" viewBox="0 0 ${fmt(width)} ${fmt(height)}">`,

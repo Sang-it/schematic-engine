@@ -67,19 +67,31 @@ export interface SidePair {
 
 const VERTICAL = (s: PinSide) => s === "left" || s === "right"
 
+/** Spacing inputs: pins carrying a passive need more room than net/empty pins. */
+export interface SpacingOptions {
+  /** Chip pin ids that have a passive attached. */
+  passivePins?: Set<string>
+  /** Min gap between adjacent pins when either has a passive. */
+  passiveGap?: number
+  /** Min gap between adjacent pins that only have a net / nothing / a break. */
+  labelGap?: number
+}
+
 /**
- * Lay out a chip's pins so that each connected same-side pair is adjacent and
- * far enough apart to fit its bridging passive, growing the chip box when the
- * required spacing exceeds the default. Sides without such pairs (and pairs
- * whose required gap is already met by the even spacing) reproduce the plain
- * even spread, so unaffected chips are unchanged.
+ * Lay out a chip's pins: same-side pairs are adjacent + spaced for their
+ * passive, other pins use the passive/label gap per neighbour, and the box
+ * grows as needed. The box is sized first, then every side is centred within
+ * the final dims so each side's two end margins are equal.
  */
 export function layoutChipPins(
   pinPositions: PinPosition[],
   size: SchematicSize,
   pairs: SidePair[],
-  minPinGap = 0,
+  spacing: SpacingOptions = {},
 ): { pins: PlacedPin[]; size: SchematicSize } {
+  const passivePins = spacing.passivePins ?? new Set<string>()
+  const passiveGap = spacing.passiveGap ?? 0
+  const labelGap = spacing.labelGap ?? 0
   const bySide: Record<PinSide, string[]> = {
     top: [],
     left: [],
@@ -88,9 +100,8 @@ export function layoutChipPins(
   }
   for (const p of pinPositions) bySide[p.side].push(p.pin)
 
-  let width = size.defaultSchematicWidth
-  let height = size.defaultSchematicHeight
-  // Per-side ordered pin list + the position of each pin along its edge.
+  const origW = size.defaultSchematicWidth
+  const origH = size.defaultSchematicHeight
   const order: Record<PinSide, string[]> = {
     top: [],
     left: [],
@@ -104,6 +115,15 @@ export function layoutChipPins(
     bottom: new Map(),
   }
 
+  // Pass 1 — measure each side against the ORIGINAL default dim, so gaps don't
+  // depend on how much a (later) side grows the box.
+  interface SideMeasure {
+    ids: string[]
+    gaps: number[]
+    innerSpan: number
+    needed: number
+  }
+  const measure: Partial<Record<PinSide, SideMeasure>> = {}
   for (const side of SIDE_ORDER) {
     const sidePairs = pairs.filter((p) => p.side === side)
     const ids = reorderAdjacent(bySide[side], sidePairs)
@@ -111,32 +131,46 @@ export function layoutChipPins(
     const n = ids.length
     if (n === 0) continue
 
-    const defaultDim = VERTICAL(side) ? height : width
-    // Floor the spacing so two single passives on adjacent pins still fit.
-    const regularGap = Math.max(defaultDim / (n + 1), minPinGap)
+    const baseGap = (VERTICAL(side) ? origH : origW) / (n + 1)
 
-    // Required gap before each pin (gap[0] = leading margin).
+    // Gap before pin i: a same-side pair forces its own gap; otherwise the
+    // passive gap if either neighbour has a passive, else the label gap. Each
+    // is floored at the even baseline so sparse chips are unchanged.
     const minGapBetween = (a: string, b: string) => {
       const pr = sidePairs.find(
         (p) => (p.pinA === a && p.pinB === b) || (p.pinA === b && p.pinB === a),
       )
-      return pr ? Math.max(regularGap, pr.minGap) : regularGap
+      if (pr) return Math.max(baseGap, pr.minGap)
+      const needsPassive = passivePins.has(a) || passivePins.has(b)
+      return Math.max(baseGap, needsPassive ? passiveGap : labelGap)
     }
-    const gaps: number[] = [regularGap]
+    const gaps: number[] = [baseGap] // leading margin reference
     for (let i = 1; i < n; i++) gaps.push(minGapBetween(ids[i - 1], ids[i]))
-    const needed = gaps.reduce((a, b) => a + b, 0) + regularGap // trailing margin
+    const innerSpan = gaps.slice(1).reduce((a, b) => a + b, 0)
+    measure[side] = { ids, gaps, innerSpan, needed: innerSpan + 2 * baseGap }
+  }
 
-    const dim = Math.max(defaultDim, needed)
-    if (VERTICAL(side)) height = Math.max(height, dim)
-    else width = Math.max(width, dim)
-
-    // Centre the run of pins within the (possibly grown) edge.
-    const start = (dim - (needed - 2 * regularGap)) / 2
-    let cursor = start
-    pos[side].set(ids[0], cursor)
-    for (let i = 1; i < n; i++) {
-      cursor += gaps[i]
-      pos[side].set(ids[i], cursor)
+  // Pass 2 — size the box from both sides on each axis, then centre every side
+  // within the FINAL dim (equal margins at both ends).
+  const width = Math.max(
+    origW,
+    measure.top?.needed ?? 0,
+    measure.bottom?.needed ?? 0,
+  )
+  const height = Math.max(
+    origH,
+    measure.left?.needed ?? 0,
+    measure.right?.needed ?? 0,
+  )
+  for (const side of SIDE_ORDER) {
+    const m = measure[side]
+    if (!m) continue
+    const dim = VERTICAL(side) ? height : width
+    let cursor = (dim - m.innerSpan) / 2
+    pos[side].set(m.ids[0], cursor)
+    for (let i = 1; i < m.ids.length; i++) {
+      cursor += m.gaps[i]
+      pos[side].set(m.ids[i], cursor)
     }
   }
 
