@@ -1,3 +1,4 @@
+import type { PinSide } from "@schematic-engine/core"
 import type {
   Placement,
   PlacedBlock,
@@ -71,14 +72,27 @@ export function solveTraces(placement: Placement): RoutedSchematic {
     const clear = (p1: Point, p2: Point) =>
       !obstacles.some((o) => segmentHitsRect(p1, p2, o))
 
-    if (clear(a, b)) {
+    // Straight only when the pins share an axis (traces are Manhattan).
+    const axisAligned = a.x === b.x || a.y === b.y
+    if (axisAligned && clear(a, b)) {
       result.traces.push({ points: [a, b] })
       continue
     }
 
+    // Pick the elbow so each pin leaves along its facing axis (left/right pins
+    // go horizontal first, top/bottom go vertical), recovering Manhattan routes
+    // that exit the pin outward. Fall back to a fixed order if a side is unknown.
+    const cornerFor = (
+      p: Point,
+      side: PinSide | undefined,
+      other: Point,
+    ): Point =>
+      side === "left" || side === "right"
+        ? { x: other.x, y: p.y }
+        : { x: p.x, y: other.y }
     const corners: Point[] = [
-      { x: b.x, y: a.y },
-      { x: a.x, y: b.y },
+      cornerFor(a, ea?.pin.side, b),
+      cornerFor(b, eb?.pin.side, a),
     ]
     const elbow = corners.find((corner) => clear(a, corner) && clear(corner, b))
     if (elbow) {

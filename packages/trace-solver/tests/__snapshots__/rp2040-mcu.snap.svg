@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="291.229" height="422.133" viewBox="0 0 291.229 422.133">
-  <polyline points="33.4,247.4 78.4,242.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="33.4,267.4 78.4,272.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="92.114,23.4 87.114,68.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="112.114,23.4 117.114,68.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="33.4,84.067 78.4,79.067" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="33.4,104.067 78.4,109.067" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="267.829,112.4 222.829,107.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="267.829,132.4 222.829,137.4" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="89.114,358.733 84.114,313.733" fill="none" stroke="black" stroke-width="1" />
-  <polyline points="109.114,358.733 114.114,313.733" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="33.4,247.4 33.4,242.4 78.4,242.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="33.4,267.4 33.4,272.4 78.4,272.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="92.114,23.4 87.114,23.4 87.114,68.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="112.114,23.4 117.114,23.4 117.114,68.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="33.4,84.067 33.4,79.067 78.4,79.067" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="33.4,104.067 33.4,109.067 78.4,109.067" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="267.829,112.4 267.829,107.4 222.829,107.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="267.829,132.4 267.829,137.4 222.829,137.4" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="89.114,358.733 84.114,358.733 84.114,313.733" fill="none" stroke="black" stroke-width="1" />
+  <polyline points="109.114,358.733 114.114,358.733 114.114,313.733" fill="none" stroke="black" stroke-width="1" />
   <polyline points="38.4,222.4 78.4,222.4" fill="none" stroke="black" stroke-width="1" />
   <polyline points="38.4,202.4 78.4,202.4" fill="none" stroke="black" stroke-width="1" />
   <polyline points="134.114,353.733 134.114,313.733" fill="none" stroke="black" stroke-width="1" />
